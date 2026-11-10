@@ -358,7 +358,7 @@ h1 .soft{display:block;color:#DCE7FF}
 
     <section class="sec">
       <div class="sec-head">
-        <div><h2>Dealer favourites</h2><p>Fast-moving picks</p></div>
+        <div><h2>Dealer favourites</h2><p>Most ordered by dealers</p></div>
         <a class="link" href="#catalog">See all <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
       </div>
       <div class="rail" id="rail"></div>
@@ -397,9 +397,10 @@ h1 .soft{display:block;color:#DCE7FF}
   const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const $ = id => document.getElementById(id);
 
-  // Hand-picked for the home screen (real products from data/products.json)
-  const FAVOURITES = ["P058","P002","P038","P043","P050","P061","P026","P083","P068","P053"];
-  const CAT_COVER  = { Dashboard:"P058", Hanging:"P061", Spray:"P043", Solar:"P017" };
+  // Best-sellers by number of dealers ordering (Jul–Nov 2026), most first. Update by hand.
+  const FAVOURITES = ["P038","P081","P056","P007","P064","P015","P014","P001","P072","P067"];
+  // Category tile photo = that category's best-seller
+  const CAT_COVER  = { Dashboard:"P007", Hanging:"P038", Spray:"P056", Solar:"P014" };
   const CAT_ORDER  = ["Dashboard","Hanging","Spray","Solar"];
 
   let cart = S.get("cart", {});
