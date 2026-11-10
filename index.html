@@ -501,6 +501,14 @@ h1 .soft{display:block;color:#FFDCD5}
       : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add`;
   }
 
+  // Preview only: screens not built yet answer the tap with a message instead of doing nothing.
+  const SOON = {catalog:"Catalog", product:"Product page", cart:"Cart", orders:"My orders", about:"About page"};
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]'); if (!a) return;
+    const key = a.getAttribute("href").slice(1).split("/")[0];
+    if (SOON[key]) { e.preventDefault(); toast(`${SOON[key]} is coming next`); }
+  });
+
   updateBadges(false);
   fetch("data/products.json").then(r => r.json()).then(render)
     .catch(() => { $("rail").innerHTML = `<p style="color:var(--muted)">Could not load products. Check your connection.</p>`; });
