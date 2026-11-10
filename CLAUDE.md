@@ -29,6 +29,18 @@ Dealers across India open one link, browse the catalog, add items with quantitie
 - WhatsApp order confirmations through WATI on a new company number
 - "New arrivals" section
 
+## Design direction (chosen by Jayant)
+Inspiration: dark landing pages with glowing blue gradients, and Apple-style bold product headlines.
+- Background: near-black / deep navy (around #05070F to #0A1030), never flat grey
+- Signature: a glowing electric-blue light effect (blue to cyan, soft white core) behind the top of the app,
+  like a curved planet horizon, rising light bars, or a soft aurora wave. Built in CSS/SVG/canvas, not a heavy video.
+  Strongest on the home screen hero; quieter on catalog, cart and orders screens so products stay the focus.
+- Type: big, bold, tight white headlines (Apple-like geometric sans); small muted grey supporting text
+- Buttons: white pill buttons with black text for the main action; outline pills for secondary
+- Product photos have white backgrounds: show them in clean rounded white tiles that sit on the dark background
+- Motion: one smooth hero entrance and a slow-moving glow; nothing that slows scrolling on cheap Android phones
+- Must stay readable outdoors in daylight: high contrast text, no thin grey-on-black body text
+
 ## Rules
 - Prices are fixed wholesale prices in INR, shown like ₹1,250
 - Hosted on GitHub Pages, so keep it a static site
