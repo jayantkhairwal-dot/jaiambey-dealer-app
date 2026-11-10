@@ -30,9 +30,10 @@ Dealers across India open one link, browse the catalog, add items with quantitie
 - "New arrivals" section
 
 ## Design direction (chosen by Jayant)
-Inspiration: dark landing pages with glowing blue gradients, and Apple-style bold product headlines.
-- Background: near-black / deep navy (around #05070F to #0A1030), never flat grey
-- Signature: a glowing electric-blue light effect (blue to cyan, soft white core) behind the top of the app,
+Inspiration: dark landing pages with glowing gradients, and Apple-style bold product headlines.
+Brand colour is the logo red (`img/logo.webp`, red around #D73630 / #E5352B) with white; Jayant switched the glow from blue to red.
+- Background: warm near-black (around #08070A, cards #17141A), never flat grey
+- Signature: a glowing red light effect (deep red to warm orange-red, soft white core) behind the top of the app,
   like a curved planet horizon, rising light bars, or a soft aurora wave. Built in CSS/SVG/canvas, not a heavy video.
   Strongest on the home screen hero; quieter on catalog, cart and orders screens so products stay the focus.
 - Type: big, bold, tight white headlines (Apple-like geometric sans); small muted grey supporting text
