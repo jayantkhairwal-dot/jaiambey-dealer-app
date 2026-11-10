@@ -1,2 +1,8 @@
-# jaiambey-dealer-app
-Dealer ordering app for Jai Ambey Accessories: car accessories catalog, cart and WhatsApp orders
+# Jai Ambey Dealer App
+
+Mobile ordering app for dealers of Jai Ambey Accessories (Karol Bagh, New Delhi).
+
+- `CLAUDE.md` – project brief for Claude Code
+- `data/products.json` – 105 car perfumes with prices
+- `img/` – product photos
+- `reference/v1-index.html` – first working prototype (features reference only)
