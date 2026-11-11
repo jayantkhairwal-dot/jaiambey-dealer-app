@@ -8,6 +8,9 @@
  * - It only READS the sheet. There is no code here that writes, deletes or moves anything.
  * - It never returns client names, staff names, payment details, delays or the promise date.
  *
+ * Read-only is enforced by Google: appsscript.json (next to this file) only asks for
+ * "spreadsheets.readonly" permission, so this project cannot change any sheet.
+ *
  * Setup (standalone project at script.google.com, NOT inside the FMS):
  * 1. Paste this whole file.
  * 2. Put the spreadsheet ID in SHEET_ID below.
