@@ -21,7 +21,16 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   My orders (one-tap Reorder at the same quantities), About page.
   Orders go out by WhatsApp for now (same as v1). Cart, details and orders are saved on the dealer's phone.
 
+- Order tracking (dealer side): My orders → "Track an order" box. Dealer types the ORD number,
+  sees 6 steps (Order received, Order confirmed, Preparing, Packed, Dispatched, Bilty sent) with dates.
+  No promise date, names, staff, payment or delays are shown. `?demo=1` shows sample steps.
+  Reader script: `apps-script/order-tracker.gs` (read-only). Test copy of the FMS made in Drive:
+  "fms jai ambey app". The real FMS is not touched.
+
 ## Waiting on Jayant
+0. Order tracking setup: create the script at script.google.com (standalone), paste
+   `apps-script/order-tracker.gs`, set SHEET_ID to the test copy, deploy as Web app (Anyone), send the URL
+   → Claude puts it in TRACK_URL in `index.html`.
 1. WhatsApp: on hold, Jayant will set it up later with WATI. For now WhatsApp opens and the dealer picks the contact.
 2. HD product photos: Black Odor has no official website, so photos found online belong
    to other shops. Ask the supplier / the source of the BO-1 and BO-2 photos for the full
