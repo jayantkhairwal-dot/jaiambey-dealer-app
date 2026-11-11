@@ -1,6 +1,6 @@
 # Progress – Jai Ambey Dealer App
 
-Last updated: 10 Nov 2026
+Last updated: 11 Nov 2026
 Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambey-dealer-app/
 (add `?demo=1` to see the Repeat order card with a sample order)
 
@@ -14,10 +14,16 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 - Fixed BO-13 photo. Sharper photos for Black Odor Microphone (P002), BO-12 (P008), BO-13 blue 160ml (P007),
   BO-5 automatic diffuser (P053) and Godrej Aer Hanging (P038).
 - GitHub Pages turned on from branch `claude/home-screen-design-plan-2bnwgc`.
-- Buttons for screens not built yet show a "coming next" message.
+- 11 Nov: home approved; built the full app in `index.html` (one page, a separate address per screen):
+  Catalog (search by name or code, category chips, sort, floating "View cart" bar),
+  Product page (big photo, quick qty 6/12/24/48, stepper, "More in category"),
+  Cart (edit qty, remove, totals, one-time shop details, note, Send order on WhatsApp, "Order ready" screen),
+  My orders (one-tap Reorder at the same quantities), About page.
+  Orders go out by WhatsApp for now (same as v1). Cart, details and orders are saved on the dealer's phone.
 
 ## Waiting on Jayant
-1. Home screen approved on 11 Nov 2026: building the other screens.
+1. Jai Ambey's order WhatsApp number (and a call number for the About page), to put in the
+   SETTINGS at the top of the script in `index.html`. Until then, WhatsApp asks the dealer to pick the contact.
 2. HD product photos: Black Odor has no official website, so photos found online belong
    to other shops. Ask the supplier / the source of the BO-1 and BO-2 photos for the full
    Black Odor image set or catalog PDF. Google share links can't be opened from Claude's
@@ -28,10 +34,8 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 4. Bluzon Kode: confirm category (Dashboard or Solar) and price (₹300 in app vs ₹325 in sales).
 5. Decide: add a "don't show in Google" tag until launch? Hide prices behind a login or PIN?
 
-## Next to build (after approval)
-1. Catalog: category filter, search, sort
-2. Product page: big photo, quick quantity buttons
-3. Cart + one-time dealer registration + send order
-4. My orders + one-tap reorder
-5. About Jai Ambey page
-6. Then: try other brands' official HD photos (Godrej, Areon, Involve, Airpro)
+## Next
+1. Jayant tests the full app on his phone and sends changes.
+2. Before sharing with dealers: add the order WhatsApp number, merge to `main`, switch GitHub Pages to `main`.
+3. Later (from CLAUDE.md): Google Apps Script backend for orders, live In stock / Out of stock, WATI confirmations, New arrivals.
+4. Better photos for other brands (Godrej, Areon, Involve, Airpro) and the doubtful Black Odor ones.
