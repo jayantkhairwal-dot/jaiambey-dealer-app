@@ -22,8 +22,7 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   Orders go out by WhatsApp for now (same as v1). Cart, details and orders are saved on the dealer's phone.
 
 ## Waiting on Jayant
-1. Jai Ambey's order WhatsApp number (and a call number for the About page), to put in the
-   SETTINGS at the top of the script in `index.html`. Until then, WhatsApp asks the dealer to pick the contact.
+1. WhatsApp: on hold, Jayant will set it up later with WATI. For now WhatsApp opens and the dealer picks the contact.
 2. HD product photos: Black Odor has no official website, so photos found online belong
    to other shops. Ask the supplier / the source of the BO-1 and BO-2 photos for the full
    Black Odor image set or catalog PDF. Google share links can't be opened from Claude's
