@@ -1,6 +1,6 @@
 # Progress – Jai Ambey Dealer App
 
-Last updated: 11 Nov 2026
+Last updated: 12 Nov 2026
 Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambey-dealer-app/
 (add `?demo=1` to see the Repeat order card with a sample order)
 
@@ -28,9 +28,8 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   "fms jai ambey app". The real FMS is not touched.
 
 ## Waiting on Jayant
-0. Order tracking setup: create the script at script.google.com (standalone), paste
-   `apps-script/order-tracker.gs`, set SHEET_ID to the test copy, deploy as Web app (Anyone), send the URL
-   → Claude puts it in TRACK_URL in `index.html`.
+0. Order tracking setup: PAUSED (12 Nov). Jayant's MIS person will finish it using
+   `apps-script/SETUP.md`. Script project "jai ambey order tracking" exists, not deployed yet.
 1. WhatsApp: on hold, Jayant will set it up later with WATI. For now WhatsApp opens and the dealer picks the contact.
 2. HD product photos: Black Odor has no official website, so photos found online belong
    to other shops. Ask the supplier / the source of the BO-1 and BO-2 photos for the full
