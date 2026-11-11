@@ -9,7 +9,7 @@ Dealers across India open one link, browse the catalog, add items with quantitie
 - Jai Ambey's team receives the orders.
 
 ## Current content
-- `data/products.json`: 106 car perfumes (id, name, cat, price in INR, unit, img).
+- `data/products.json`: 108 car perfumes (id, name, cat, price in INR, unit, img).
   Categories: Dashboard, Hanging, Spray, Solar. `unit` is "per pc" / "per box" or empty.
 - `img/`: one 560x560 white-background photo per product.
 - `reference/v1-index.html`: first working prototype (catalog, cart, register, WhatsApp order, order history, reorder). Use it for features and flow, not for design.
