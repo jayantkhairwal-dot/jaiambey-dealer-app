@@ -11,8 +11,11 @@
  * Read-only is enforced by Google: appsscript.json (next to this file) only asks for
  * "spreadsheets.readonly" permission, so this project cannot change any sheet.
  *
+ * It reads through the "Google Sheets API" service (Services → + → Google Sheets API),
+ * because SpreadsheetApp.openById() refuses to run with read-only permission.
+ *
  * Setup (standalone project at script.google.com, NOT inside the FMS):
- * 1. Paste this whole file.
+ * 1. Paste this whole file. Add the service: Services → + → Google Sheets API → Add.
  * 2. Put the spreadsheet ID in SHEET_ID below.
  *    For testing: the copy "fms jai ambey app". Later: the real FMS (still read-only).
  * 3. Deploy → New deployment → Web app → Execute as: Me → Who has access: Anyone → Deploy.
@@ -50,8 +53,12 @@ function track(raw) {
   const hit = cache.get('o:' + id);
   if (hit) return JSON.parse(hit);
 
-  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
-  const rows = sheet.getDataRange().getValues();
+  // Read-only read through the Sheets API. Dates come back as serial numbers (days since 30 Dec 1899).
+  const res = Sheets.Spreadsheets.Values.get(SHEET_ID, "'" + SHEET_NAME + "'", {
+    valueRenderOption: 'UNFORMATTED_VALUE',
+    dateTimeRenderOption: 'SERIAL_NUMBER'
+  });
+  const rows = res.values || [];
 
   // Data starts after the header row whose column B says "Order ID"
   let start = rows.findIndex(r => String(r[COL.orderId]).trim().toLowerCase() === 'order id');
@@ -94,6 +101,11 @@ function normalizeId(v) {
 }
 
 function isoDate(v) {
+  if (typeof v === 'number') {
+    // Sheet serial date → calendar date (the serial is already in the sheet's own time zone)
+    const d = new Date(Math.round((v - 25569) * 86400000));
+    return Utilities.formatDate(d, 'UTC', 'yyyy-MM-dd');
+  }
   const d = v instanceof Date ? v : new Date(v);
   return isNaN(d) ? null : Utilities.formatDate(d, 'Asia/Kolkata', 'yyyy-MM-dd');
 }
