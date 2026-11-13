@@ -434,6 +434,10 @@ a{color:inherit;text-decoration:none}
 .shot.bad{border-color:var(--err)}
 .warnbox{margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(229,53,43,.12);border:1px solid rgba(229,53,43,.4);font-size:14px;line-height:1.45;font-weight:600}
 
+.seg{display:flex;gap:8px}
+.seg button{flex:1;min-height:50px;border-radius:999px;border:1.5px solid rgba(255,255,255,.35);font-weight:700;font-size:15px;color:#fff}
+.seg button.on{background:#fff;color:#08070A;border-color:#fff}
+
 /* About */
 .ab-logo{display:grid;place-items:center;padding:12px 0 6px}
 .ab-logo img{width:min(300px,80%);height:auto}
@@ -698,6 +702,7 @@ a{color:inherit;text-decoration:none}
   let orders = S.get("orders", []);      // newest first
   let cat = "All", q = "", sort = "pop";
   let sentOrder = null;                  // order just sent, shown on the cart screen
+  let cartPay = { mode: "later" };       // cart "Pay now": amount, utr, screenshot kept while the cart re-draws
   const scrollMemo = {};
 
   // Preview helper: ?demo=1 adds one sample past order (only on this phone, never sent anywhere)
@@ -975,7 +980,7 @@ a{color:inherit;text-decoration:none}
         <div class="sumrow"><span>Total quantity</span><span>${cartQty()}</span></div>
         <div class="sumrow big"><span>Total</span><b>${rs(cartTotal())}</b></div>
         <p class="note">Final bill, GST and transport are confirmed by Jai Ambey after you send the order.</p>
-        ${PAY_ON ? `<p class="note" style="color:#fff">Pay by UPI and upload the payment screenshot on the next screen, after you send the order.</p>` : ""}
+        ${PAY_ON ? `<p class="note" style="color:#fff">Pay now by UPI below, or pay later after we confirm the bill.</p>` : ""}
       </div>
 
       <h2 class="h2">Your shop details</h2>
@@ -992,6 +997,16 @@ a{color:inherit;text-decoration:none}
         </div>
         <label class="fld" style="margin-top:14px"><span>Note for this order <i>(optional)</i></span>
           <textarea name="note" rows="2" placeholder="e.g. send by Monday, transport name"></textarea></label>
+        ${PAY_ON ? `<h2 class="h2">Payment</h2>
+        <div class="seg" id="paySeg"><button type="button" data-pm="later" class="${cartPay.mode === "now" ? "" : "on"}">Pay later</button>
+          <button type="button" data-pm="now" class="${cartPay.mode === "now" ? "on" : ""}">Pay now by UPI</button></div>
+        <p class="note" id="payLaterNote" ${cartPay.mode === "now" ? "hidden" : ""}>Our team sends the final bill. Pay and upload the screenshot later from My orders.</p>
+        <div id="payNow" ${cartPay.mode === "now" ? "" : "hidden"} style="margin-top:14px">
+          ${demoBox()}
+          <p class="note" style="margin:0 0 12px">Pay the total above (${rs(cartTotal())}). Transport, if any, is billed later.</p>
+          ${UPI_ID ? upiCard("Jai Ambey order " + (me.shop || "")) : ""}
+          ${UP_ON ? `<div class="card" style="margin-top:12px">${shotFields(cartPay)}</div>` : ""}
+        </div>` : ""}
         <div class="errmsg" id="formErr" hidden></div>
         <div class="actions">
           <button type="submit" class="pill pill-wa">${ICON.wa}Send order on WhatsApp</button>
@@ -1007,6 +1022,17 @@ a{color:inherit;text-decoration:none}
       else { clr.dataset.sure = 1; clr.textContent = "Tap again to clear the whole cart"; clr.style.color = "var(--err)"; }
     };
     $("orderForm").onsubmit = e => { e.preventDefault(); sendOrder(new FormData(e.target)); };
+    const seg = $("paySeg");
+    if (seg){
+      if (cartPay.amount === undefined || !cartPay.typed) cartPay.amount = String(cartTotal());
+      const am = v.querySelector('[data-pay="amount"]'); if (am && !cartPay.typed) am.value = cartPay.amount;
+      if (am) am.addEventListener("input", () => cartPay.typed = true);
+      wirePay($("payNow"), "Jai Ambey order " + (me.shop || ""), cartPay);
+      seg.onclick = e => { const b = e.target.closest("[data-pm]"); if (!b) return;
+        cartPay.mode = b.dataset.pm;
+        seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+        $("payNow").hidden = cartPay.mode !== "now"; $("payLaterNote").hidden = cartPay.mode === "now"; };
+    }
   }
   function renderGridIfReady(){ if (P.length){ renderGrid(); renderHome(); } }
 
@@ -1035,6 +1061,9 @@ a{color:inherit;text-decoration:none}
     }
     me = d; S.set("me", me);
 
+    let pay = null;
+    if (PAY_ON && cartPay.mode === "now" && UP_ON){ pay = readPay($("payNow"), cartPay); if (!pay) return; }
+
     const L = cartLines(), total = cartTotal(), id = orderId();
     const lines = L.map((x,i) => `${i+1}. ${x.p.name} (${x.p.id}) × ${x.n} @ ${rs(x.p.price)}${x.p.unit?" "+x.p.unit:""} = ${rs(x.p.price*x.n)}`);
     const msg = [
@@ -1042,7 +1071,8 @@ a{color:inherit;text-decoration:none}
       `*Shop:* ${d.shop}`, `*Name:* ${d.name}`, `*City:* ${d.city}`, `*Mobile:* ${d.phone}`, d.gst ? `*GST:* ${d.gst}` : null, ``,
       ...lines, ``,
       `*Total: ${rs(total)}* (${L.length} items, qty ${cartQty()})`,
-      f.note && f.note.trim() ? `*Note:* ${f.note.trim()}` : null
+      f.note && f.note.trim() ? `*Note:* ${f.note.trim()}` : null,
+      pay ? `\n*Payment:* Paid ${rs(pay.amount)} by UPI · UTR ${pay.utr} (screenshot uploaded in the app)` : null
     ].filter(x => x !== null).join("\n");
 
     orders.unshift({ id, at: Date.now(), items: L.map(x => ({id:x.p.id, n:x.n, price:x.p.price})), total });
@@ -1050,6 +1080,15 @@ a{color:inherit;text-decoration:none}
     const url = (ORDER_WHATSAPP ? `https://wa.me/${ORDER_WHATSAPP}` : `https://wa.me/`) + `?text=${encodeURIComponent(msg)}`;
     cart = {}; S.set("cart", cart); updateCartUI(false);
     sentOrder = { id, url, total, n: L.length };
+    if (pay){
+      const shot = cartPay.data;
+      sentOrder.pay = { ...pay, status: "up" };
+      const so = sentOrder;
+      const redraw = () => { if (current === "cart" && sentOrder === so) renderSent(); };
+      uploadPay(orders[0], pay, shot).then(() => { so.pay.status = "ok"; redraw(); })
+        .catch(e => { so.pay.status = "fail"; so.pay.err = upErr(e); redraw(); });
+    }
+    cartPay = { mode: "later" };
     renderCart(); renderGridIfReady(); window.scrollTo(0, 0);
   }
   function renderSent(){
@@ -1062,11 +1101,14 @@ a{color:inherit;text-decoration:none}
         <li><span>Tap the green button below. WhatsApp opens with your order typed in.</span></li>
         ${ORDER_WHATSAPP ? "" : "<li><span>Choose Jai Ambey's number.</span></li>"}
         <li><span>Press <b>Send</b> in WhatsApp. Our team confirms the bill and transport.</span></li>
-        ${PAY_ON ? "<li><span>Pay by UPI and upload the payment screenshot. You can also do it later from <b>My orders</b>.</span></li>" : ""}
+        ${PAY_ON && !o.pay ? "<li><span>Pay by UPI and upload the payment screenshot. You can also do it later from <b>My orders</b>.</span></li>" : ""}
       </ol>
+      ${o.pay ? (o.pay.status === "ok" ? `<div class="paid" style="justify-content:center;margin:0 0 18px">${ICON.tick}Payment screenshot uploaded · ${rs(o.pay.amount)}${PAY_DEMO && !PAY_UPLOAD_URL ? " (preview, not sent)" : ""}</div>`
+        : o.pay.status === "up" ? `<p class="note" style="margin:0 0 18px">Uploading payment screenshot…</p>`
+        : `<div class="warnbox" style="margin:0 0 18px;text-align:left">Payment screenshot not uploaded. ${esc(o.pay.err || "")} Use <b>Pay / Upload screenshot</b> below.</div>`) : ""}
       <div class="actions">
         <a class="pill pill-wa" href="${esc(o.url)}" target="_blank" rel="noopener">${ICON.wa}Open WhatsApp</a>
-        ${PAY_ON ? `<a class="pill pill-white" href="#pay/${encodeURIComponent(o.id)}">Pay / Upload screenshot</a>` : ""}
+        ${PAY_ON && (!o.pay || o.pay.status === "fail") ? `<a class="pill pill-white" href="#pay/${encodeURIComponent(o.id)}">Pay / Upload screenshot</a>` : ""}
         <a class="pill pill-outline" href="#orders">My orders</a>
       </div></div>`;
   }
@@ -1108,56 +1150,46 @@ a{color:inherit;text-decoration:none}
   const PAY_ON = !!(PAY_UPI_ID || PAY_UPLOAD_URL || PAY_DEMO);
   const UPI_ID = PAY_UPI_ID || (PAY_DEMO ? "your-upi-id@bank" : "");
   const UP_ON = !!(PAY_UPLOAD_URL || PAY_DEMO);
-  const upiLink = o => `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(PAY_NAME)}&tn=${encodeURIComponent("Order " + o.id)}&cu=INR`;
-  let shotData = null;
-  function renderPay(id){
-    const v = $("v-pay"), o = orders.find(x => x.id === id);
-    if (!o){ v.innerHTML = `<a class="back" href="#orders">${ICON.back}My orders</a>
-      <div class="empty-box" style="margin-top:12px"><h3>Order not found</h3><p>Open the order from My orders.</p></div>`; return; }
-    shotData = null;
-    v.innerHTML = `<a class="back" href="#orders">${ICON.back}My orders</a>
-      <h1 class="ptitle">Pay for order</h1>
-      ${PAY_DEMO ? `<div class="warnbox" style="margin-bottom:12px">Preview only. Nothing is paid or sent. Jai Ambey's real UPI ID goes here after setup.</div>` : ""}
-      <div class="card"><div class="payhead"><b>${esc(o.id)}</b><span class="t">${rs(o.total)}</span></div>
-        <p class="note" style="margin-top:4px">App total. Pay the <b style="color:#fff">final bill</b> our team sends you (with GST and transport).</p>
-        ${UPI_ID && UP_ON ? `<a class="pill pill-outline" href="#" id="toShot" style="margin-top:14px">Already paid? Upload screenshot</a>` : ""}</div>
-      ${UPI_ID ? `<h2 class="h2">1. Pay by UPI</h2>
-      <div class="card">
-        <a class="pill pill-white" href="${upiLink(o)}" id="upiBtn">Pay by UPI app</a>
+  const upiLink = note => `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(PAY_NAME)}&tn=${encodeURIComponent(note)}&cu=INR`;
+  const demoBox = () => PAY_DEMO ? `<div class="warnbox" style="margin-bottom:12px">Preview only. Nothing is paid or sent. Jai Ambey's real UPI ID goes here after setup.</div>` : "";
+
+  // Building blocks shared by the cart ("Pay now") and the Pay screen of a past order
+  function upiCard(note){
+    return `<div class="card">
+        <a class="pill pill-white" href="${upiLink(note)}" data-upi>Pay by UPI app</a>
         <p class="note" style="text-align:center">Opens GPay, PhonePe, Paytm or BHIM. Enter the amount and your PIN.</p>
-        <div class="upi"><div><small>UPI ID · ${esc(PAY_NAME)}</small><b>${esc(UPI_ID)}</b></div><button type="button" id="copyUpi">Copy</button></div>
-        <button type="button" class="textbtn" id="showQr" style="margin-top:10px">Show QR code</button>
-        <div id="qrBox" hidden></div>
+        <div class="upi"><div><small>UPI ID · ${esc(PAY_NAME)}</small><b>${esc(UPI_ID)}</b></div><button type="button" data-copy>Copy</button></div>
+        <button type="button" class="textbtn" data-showqr style="margin-top:10px">Show QR code</button>
+        <div data-qr hidden></div>
         <p class="note">Above ₹1 lakh, UPI may not work. Ask us for bank details.</p>
-      </div>` : ""}
-      ${UP_ON ? `<h2 class="h2" id="shotHead">${UPI_ID ? "2. " : ""}Upload payment screenshot</h2>
-      <form class="card" id="payForm" novalidate>
-        <label class="fld" data-f="amount"><span>Amount paid (₹)</span><input name="amount" inputmode="decimal" placeholder="e.g. 12500"></label>
-        <label class="fld" data-f="utr"><span>UTR / UPI Ref No.</span><input name="utr" autocapitalize="characters" placeholder="12-digit number from your UPI app"></label>
+      </div>`;
+  }
+  function shotFields(st){
+    return `<label class="fld" data-f="amount"><span>Amount paid (₹)</span><input data-pay="amount" inputmode="decimal" placeholder="e.g. 12500" value="${esc(st.amount || "")}"></label>
+        <label class="fld" data-f="utr"><span>UTR / UPI Ref No.</span><input data-pay="utr" autocapitalize="characters" placeholder="12-digit number from your UPI app" value="${esc(st.utr || "")}"></label>
         <p class="note" style="margin:-6px 0 14px">Find it in your UPI app: open the payment, look for "UTR", "UPI Ref No." or "UPI transaction ID".</p>
         <span style="display:block;font-size:15px;font-weight:700;margin-bottom:6px">Payment screenshot</span>
-        <label class="shot" id="shotBox"><input type="file" accept="image/*" id="shotIn"><span id="shotTxt"><span class="pill pill-white" style="pointer-events:none;min-height:46px;padding:0 22px">Choose screenshot</span><br><span style="font-size:14px;color:var(--muted)">from your gallery</span></span></label>
-        <div class="errmsg" id="payErr" hidden></div>
-        <div class="actions"><button type="submit" class="pill pill-white" id="paySend">Upload screenshot</button></div>
-        <p class="note">Your order is dispatched after our team sees the money in our bank.</p>
-      </form>` : ""}
-      <div class="spacer"></div>`;
-    const cp = $("copyUpi");
-    if (PAY_DEMO && !PAY_UPI_ID) $("upiBtn").onclick = e => { e.preventDefault(); toast("Preview: this opens GPay / PhonePe after setup"); };
+        <label class="shot" data-shot><input type="file" accept="image/*"><span class="shotTxt">${st.data ? shotPreview(st.data)
+          : `<span class="pill pill-white" style="pointer-events:none;min-height:46px;padding:0 22px">Choose screenshot</span><br><span style="font-size:14px;color:var(--muted)">from your gallery</span>`}</span></label>
+        <div class="errmsg" data-payerr hidden></div>`;
+  }
+  const shotPreview = d => `<img src="${d}" alt="Payment screenshot"><span style="font-size:14px;color:var(--muted)">Tap to change</span>`;
+  // Wire buttons and inputs inside root; st keeps amount / utr / screenshot between screen refreshes
+  function wirePay(root, note, st){
+    const u = root.querySelector("[data-upi]");
+    if (u && PAY_DEMO && !PAY_UPI_ID) u.onclick = e => { e.preventDefault(); toast("Preview: this opens GPay / PhonePe after setup"); };
+    const cp = root.querySelector("[data-copy]");
     if (cp) cp.onclick = () => { (navigator.clipboard ? navigator.clipboard.writeText(UPI_ID) : Promise.reject()).then(() => toast("UPI ID copied"), () => toast(UPI_ID)); };
-    const sq = $("showQr");
-    if (sq) sq.onclick = () => { sq.hidden = true; const b = $("qrBox"); b.hidden = false; drawQr(b, upiLink(o)); };
-    const ts = $("toShot");
-    if (ts) ts.onclick = e => { e.preventDefault(); $("shotHead").scrollIntoView({behavior:"smooth", block:"start"}); };
-    const si = $("shotIn");
-    if (si) si.onchange = () => pickShot(si.files[0]);
-    const f = $("payForm");
-    if (f) f.onsubmit = e => { e.preventDefault(); sendPayment(o, new FormData(f)); };
-    if (f) f.oninput = f.onchange = () => { $("payErr").hidden = true; };
+    const sq = root.querySelector("[data-showqr]");
+    if (sq) sq.onclick = () => { sq.hidden = true; const b = root.querySelector("[data-qr]"); b.hidden = false; drawQr(b, upiLink(note)); };
+    root.querySelectorAll("[data-pay]").forEach(i => i.oninput = () => { st[i.dataset.pay] = i.value; hideErr(); });
+    const fi = root.querySelector("[data-shot] input");
+    if (fi) fi.onchange = () => { hideErr(); pickShot(fi.files[0], root.querySelector("[data-shot]"), st); };
+    function hideErr(){ const e = root.querySelector("[data-payerr]"); if (e) e.hidden = true; }
   }
   function drawQr(box, text){
-    const go = () => { box.innerHTML = `<div class="qr" id="qrEl"></div><p class="note" style="text-align:center">Scan with any UPI app</p>`;
-      new QRCode($("qrEl"), {text, width:400, height:400, correctLevel: QRCode.CorrectLevel.M}); };
+    const go = () => { box.innerHTML = `<div class="qr"></div><p class="note" style="text-align:center">Scan with any UPI app</p>`;
+      new QRCode(box.querySelector(".qr"), {text, width:400, height:400, correctLevel: QRCode.CorrectLevel.M}); };
     if (window.QRCode) return go();
     box.innerHTML = `<p class="note">Loading QR…</p>`;
     const sc = document.createElement("script");
@@ -1166,9 +1198,9 @@ a{color:inherit;text-decoration:none}
     document.head.appendChild(sc);
   }
   // Shrink the screenshot on the phone so it uploads fast on slow 4G
-  function pickShot(file){
-    const box = $("shotBox"), txt = $("shotTxt");
-    shotData = null; box.classList.remove("bad");
+  function pickShot(file, box, st){
+    const txt = box.querySelector(".shotTxt");
+    st.data = null; box.classList.remove("bad");
     if (!file) return;
     if (!/^image\//.test(file.type)){ txt.textContent = "Please choose a photo or screenshot"; box.classList.add("bad"); return; }
     txt.textContent = "Loading…";
@@ -1177,50 +1209,86 @@ a{color:inherit;text-decoration:none}
       const k = Math.min(1, 1600 / Math.max(im.width, im.height));
       const c = document.createElement("canvas"); c.width = Math.round(im.width*k); c.height = Math.round(im.height*k);
       c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
-      shotData = c.toDataURL("image/jpeg", .82); URL.revokeObjectURL(url);
-      txt.innerHTML = `<img src="${shotData}" alt="Payment screenshot"><span style="font-size:14px;color:var(--muted)">Tap to change</span>`;
+      st.data = c.toDataURL("image/jpeg", .82); URL.revokeObjectURL(url);
+      txt.innerHTML = shotPreview(st.data);
     };
     im.onerror = () => { txt.textContent = "Could not open this image. Try another."; box.classList.add("bad"); };
     im.src = url;
   }
-  function sendPayment(o, fd){
-    const amount = parseFloat(String(fd.get("amount")||"").replace(/[^\d.]/g,""));
-    const utr = String(fd.get("utr")||"").replace(/\s/g,"").toUpperCase();
+  // Check amount, UTR and screenshot; show what is missing. Returns {amount, utr} or null.
+  function readPay(root, st){
+    const amount = parseFloat(String(st.amount || "").replace(/[^\d.]/g, ""));
+    const utr = String(st.utr || "").replace(/\s/g, "").toUpperCase();
     const bad = [];
     if (!(amount >= 1 && amount <= 1000000)) bad.push("amount");
     if (!/^[A-Z0-9]{10,35}$/.test(utr)) bad.push("utr");
-    document.querySelectorAll("#payForm .fld").forEach(el => el.classList.toggle("bad", bad.includes(el.dataset.f)));
-    $("shotBox").classList.toggle("bad", !shotData);
-    const err = $("payErr");
-    if (bad.length || !shotData){
+    root.querySelectorAll(".fld[data-f='amount'],.fld[data-f='utr']").forEach(el => el.classList.toggle("bad", bad.includes(el.dataset.f)));
+    const sb = root.querySelector("[data-shot]"); if (sb) sb.classList.toggle("bad", !st.data);
+    const err = root.querySelector("[data-payerr]");
+    if (bad.length || !st.data){
       const names = {amount:"the amount you paid", utr:"the UTR / UPI Ref No."};
-      err.hidden = false; err.textContent = "Please add " + [...bad.map(k => names[k]), ...(shotData ? [] : ["the screenshot"])].join(", ") + ".";
-      return;
+      err.hidden = false; err.textContent = "Please add " + [...bad.map(k => names[k]), ...(st.data ? [] : ["the payment screenshot"])].join(", ") + ".";
+      (root.querySelector(".fld.bad input") || sb).scrollIntoView({block:"center"});
+      return null;
     }
     err.hidden = true;
-    const btn = $("paySend"); btn.disabled = true; btn.textContent = "Sending…";
-    const body = JSON.stringify({ order:o.id, orderTotal:o.total, amount, utr,
+    return { amount, utr };
+  }
+  function uploadPay(o, pay, data){
+    const body = JSON.stringify({ order:o.id, orderTotal:o.total, amount:pay.amount, utr:pay.utr,
       shop:me.shop||"", name:me.name||"", city:me.city||"", phone:me.phone||"", gst:me.gst||"",
-      image: shotData.split(",")[1], mime:"image/jpeg" });
-    (PAY_UPLOAD_URL ? fetch(PAY_UPLOAD_URL, { method:"POST", body }).then(r => r.json())   // text/plain body: no CORS pre-check needed
-      : new Promise(ok => setTimeout(() => ok({ok:true}), 900)))                       // preview: nothing is sent
+      image: data.split(",")[1], mime:"image/jpeg" });
+    return (PAY_UPLOAD_URL ? fetch(PAY_UPLOAD_URL, { method:"POST", body }).then(r => r.json())   // text/plain body: no CORS pre-check needed
+      : new Promise(ok => setTimeout(() => ok({ok:true}), 900)))                              // preview: nothing is sent
       .then(res => {
         if (!res.ok) throw new Error(res.error || "failed");
-        o.pay = { at: Date.now(), amount, utr }; S.set("orders", orders.slice(0, 50));
-        $("v-pay").innerHTML = `<div class="done"><div class="tick">${ICON.tick}</div><h2>Screenshot uploaded</h2>
+        o.pay = { at: Date.now(), amount: pay.amount, utr: pay.utr }; S.set("orders", orders.slice(0, 50));
+      });
+  }
+  const upErr = e => /too_many/.test(e.message) ? "Too many uploads from this number. Please try again later or send it on WhatsApp."
+    : /bad_/.test(e.message) ? "Please check the amount and UTR and try again."
+    : "Could not upload. Check your internet and try again.";
+
+  // Pay screen for an order already sent (from My orders or the Order ready screen)
+  function renderPay(id){
+    const v = $("v-pay"), o = orders.find(x => x.id === id);
+    if (!o){ v.innerHTML = `<a class="back" href="#orders">${ICON.back}My orders</a>
+      <div class="empty-box" style="margin-top:12px"><h3>Order not found</h3><p>Open the order from My orders.</p></div>`; return; }
+    const st = {};
+    v.innerHTML = `<a class="back" href="#orders">${ICON.back}My orders</a>
+      <h1 class="ptitle">Pay for order</h1>
+      ${demoBox()}
+      <div class="card"><div class="payhead"><b>${esc(o.id)}</b><span class="t">${rs(o.total)}</span></div>
+        <p class="note" style="margin-top:4px">App total. Pay the <b style="color:#fff">final bill</b> our team sends you (with GST and transport).</p>
+        ${UPI_ID && UP_ON ? `<a class="pill pill-outline" href="#" id="toShot" style="margin-top:14px">Already paid? Upload screenshot</a>` : ""}</div>
+      ${UPI_ID ? `<h2 class="h2">1. Pay by UPI</h2>${upiCard("Order " + o.id)}` : ""}
+      ${UP_ON ? `<h2 class="h2" id="shotHead">${UPI_ID ? "2. " : ""}Upload payment screenshot</h2>
+      <form class="card" id="payForm" novalidate>${shotFields(st)}
+        <div class="actions"><button type="submit" class="pill pill-white" id="paySend">Upload screenshot</button></div>
+        <p class="note">Your order is dispatched after our team sees the money in our bank.</p>
+      </form>` : ""}
+      <div class="spacer"></div>`;
+    wirePay(v, "Order " + o.id, st);
+    const ts = $("toShot");
+    if (ts) ts.onclick = e => { e.preventDefault(); $("shotHead").scrollIntoView({behavior:"smooth", block:"start"}); };
+    const f = $("payForm");
+    if (f) f.onsubmit = e => {
+      e.preventDefault();
+      const pay = readPay(f, st); if (!pay) return;
+      const btn = $("paySend"); btn.disabled = true; btn.textContent = "Uploading…";
+      uploadPay(o, pay, st.data).then(() => {
+        v.innerHTML = `<div class="done"><div class="tick">${ICON.tick}</div><h2>Screenshot uploaded</h2>
           ${PAY_DEMO && !PAY_UPLOAD_URL ? `<p style="color:var(--hot)">Preview: nothing was sent.</p>` : ""}
-          <p>Order <b>${esc(o.id)}</b> · <b>${rs(amount)}</b><br>UTR ${esc(utr)}</p>
+          <p>Order <b>${esc(o.id)}</b> · <b>${rs(pay.amount)}</b><br>UTR ${esc(pay.utr)}</p>
           <ol class="steps3"><li><span>Our team checks the payment in our bank.</span></li>
           <li><span>Then we dispatch your order and send you the bilty on WhatsApp.</span></li></ol>
           <div class="actions"><a class="pill pill-white" href="#orders">My orders</a></div></div>`;
         window.scrollTo(0, 0);
-      })
-      .catch(e => {
-        btn.disabled = false; btn.textContent = "Upload screenshot"; err.hidden = false;
-        err.textContent = /too_many/.test(e.message) ? "Too many uploads from this number. Please try again later or send it on WhatsApp."
-          : /bad_/.test(e.message) ? "Please check the amount and UTR and try again."
-          : "Could not send. Check your internet and try again.";
+      }).catch(e => {
+        btn.disabled = false; btn.textContent = "Upload screenshot";
+        const err = f.querySelector("[data-payerr]"); err.hidden = false; err.textContent = upErr(e);
       });
+    };
   }
 
   // ---------- ABOUT ----------
