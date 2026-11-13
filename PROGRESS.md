@@ -32,8 +32,15 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   "Perfume images": P003 P010 P011 P015 P022 P029 P037 P039 P042 P043 P048 P049 P050 P051 P053
   P056 P059 P060 P061 P062 P063 P080 P085 P088 P089 P090 P095 P097 P101 P103.
 
+- 13 Nov: **Payments (built, switched off until set up)**: My orders → "Pay & upload screenshot" for each order.
+  Pay by UPI (opens the UPI app, copy UPI ID, QR code) + form: amount, UTR (required), screenshot.
+  Upload goes to a Google Apps Script in a NEW sheet "Jai Ambey App – Payments" (`apps-script/payments.gs`, `SETUP.md`):
+  screenshot saved in Drive, one row per payment, red warning for a reused UTR or less than the app total,
+  "Confirmed in bank" tick box for the team. Rule: never dispatch on a screenshot alone.
+  Switch on by filling `PAY_UPI_ID` and `PAY_UPLOAD_URL` in `index.html`.
+
 ## Waiting on Jayant
-1. Payment gateway: decisions needed (which gateway, when dealers pay, full or advance). See chat of 13 Nov.
+1. Payments: send the business UPI ID, and do `apps-script/SETUP.md` (or MIS) and send the web app URL.
 2. WhatsApp: on hold until WATI. For now WhatsApp opens and the dealer picks the contact.
 3. 13 Nov photo round 2 done (Jayant's answers): new photos for P001 BO-15, P004 Poppy, P009 BO-21, P013 Grandy,
    P016 Big Fresh, P018 Designer Perfume, P030 Jello, P034 Lure Hanging, P035 Stop-O, P064 Godrej Dashboard (aer twist),
@@ -49,7 +56,7 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
    and Apps Script project "jai ambey order tracking".
 
 ## Next
-1. Payment gateway (after decisions).
+1. Switch on payments once the UPI ID and web app URL arrive; test one real ₹1 payment end to end.
 2. Jayant tests the full app on his phone and sends changes.
 3. Before sharing with dealers: merge to `main`, switch GitHub Pages to `main`.
 4. Later (from CLAUDE.md): Google Apps Script backend for orders, live In stock / Out of stock, WATI confirmations, New arrivals.
