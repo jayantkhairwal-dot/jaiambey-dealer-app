@@ -856,7 +856,7 @@ a{color:inherit;text-decoration:none}
   function filtered(){
     const words = q.split(/\s+/).map(norm).filter(Boolean);
     let list = P.filter(p => (cat === "All" || p.cat === cat) &&
-      words.every(w => norm(p.name + " " + p.id + " " + p.cat).includes(w)));
+      words.every(w => norm(p.name + " " + (p.aka || "") + " " + p.id + " " + p.cat).includes(w)));
     const base = (a,b) => P.indexOf(a) - P.indexOf(b);
     const by = {
       pop:  (a,b) => (favRank[a.id] ?? 999) - (favRank[b.id] ?? 999) || base(a,b),
