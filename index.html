@@ -975,6 +975,7 @@ a{color:inherit;text-decoration:none}
         <div class="sumrow"><span>Total quantity</span><span>${cartQty()}</span></div>
         <div class="sumrow big"><span>Total</span><b>${rs(cartTotal())}</b></div>
         <p class="note">Final bill, GST and transport are confirmed by Jai Ambey after you send the order.</p>
+        ${PAY_ON ? `<p class="note" style="color:#fff">Pay by UPI and upload the payment screenshot on the next screen, after you send the order.</p>` : ""}
       </div>
 
       <h2 class="h2">Your shop details</h2>
@@ -1061,10 +1062,11 @@ a{color:inherit;text-decoration:none}
         <li><span>Tap the green button below. WhatsApp opens with your order typed in.</span></li>
         ${ORDER_WHATSAPP ? "" : "<li><span>Choose Jai Ambey's number.</span></li>"}
         <li><span>Press <b>Send</b> in WhatsApp. Our team confirms the bill and transport.</span></li>
-        ${PAY_ON ? "<li><span>After we confirm the bill, pay and upload the screenshot from <b>My orders</b>.</span></li>" : ""}
+        ${PAY_ON ? "<li><span>Pay by UPI and upload the payment screenshot. You can also do it later from <b>My orders</b>.</span></li>" : ""}
       </ol>
       <div class="actions">
         <a class="pill pill-wa" href="${esc(o.url)}" target="_blank" rel="noopener">${ICON.wa}Open WhatsApp</a>
+        ${PAY_ON ? `<a class="pill pill-white" href="#pay/${encodeURIComponent(o.id)}">Pay / Upload screenshot</a>` : ""}
         <a class="pill pill-outline" href="#orders">My orders</a>
       </div></div>`;
   }
