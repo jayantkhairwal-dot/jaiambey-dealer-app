@@ -1101,8 +1101,12 @@ a{color:inherit;text-decoration:none}
   }
 
   // ---------- PAY ----------
-  const PAY_ON = !!(PAY_UPI_ID || PAY_UPLOAD_URL);
-  const upiLink = o => `upi://pay?pa=${encodeURIComponent(PAY_UPI_ID)}&pn=${encodeURIComponent(PAY_NAME)}&tn=${encodeURIComponent("Order " + o.id)}&cu=INR`;
+  // ?demo=1 shows the payment screens before they are set up. Nothing is paid or sent in this preview.
+  const PAY_DEMO = new URLSearchParams(location.search).has("demo") && !(PAY_UPI_ID && PAY_UPLOAD_URL);
+  const PAY_ON = !!(PAY_UPI_ID || PAY_UPLOAD_URL || PAY_DEMO);
+  const UPI_ID = PAY_UPI_ID || (PAY_DEMO ? "your-upi-id@bank" : "");
+  const UP_ON = !!(PAY_UPLOAD_URL || PAY_DEMO);
+  const upiLink = o => `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(PAY_NAME)}&tn=${encodeURIComponent("Order " + o.id)}&cu=INR`;
   let shotData = null;
   function renderPay(id){
     const v = $("v-pay"), o = orders.find(x => x.id === id);
@@ -1111,18 +1115,19 @@ a{color:inherit;text-decoration:none}
     shotData = null;
     v.innerHTML = `<a class="back" href="#orders">${ICON.back}My orders</a>
       <h1 class="ptitle">Pay for order</h1>
+      ${PAY_DEMO ? `<div class="warnbox" style="margin-bottom:12px">Preview only. Nothing is paid or sent. Jai Ambey's real UPI ID goes here after setup.</div>` : ""}
       <div class="card"><div class="payhead"><b>${esc(o.id)}</b><span class="t">${rs(o.total)}</span></div>
         <p class="note" style="margin-top:4px">App total. Pay the <b style="color:#fff">final bill</b> our team sends you (with GST and transport).</p></div>
-      ${PAY_UPI_ID ? `<h2 class="h2">1. Pay by UPI</h2>
+      ${UPI_ID ? `<h2 class="h2">1. Pay by UPI</h2>
       <div class="card">
         <a class="pill pill-white" href="${upiLink(o)}" id="upiBtn">Pay by UPI app</a>
         <p class="note" style="text-align:center">Opens GPay, PhonePe, Paytm or BHIM. Enter the amount and your PIN.</p>
-        <div class="upi"><div><small>UPI ID · ${esc(PAY_NAME)}</small><b>${esc(PAY_UPI_ID)}</b></div><button type="button" id="copyUpi">Copy</button></div>
+        <div class="upi"><div><small>UPI ID · ${esc(PAY_NAME)}</small><b>${esc(UPI_ID)}</b></div><button type="button" id="copyUpi">Copy</button></div>
         <button type="button" class="textbtn" id="showQr" style="margin-top:10px">Show QR code</button>
         <div id="qrBox" hidden></div>
         <p class="note">Above ₹1 lakh, UPI may not work. Ask us for bank details.</p>
       </div>` : ""}
-      ${PAY_UPLOAD_URL ? `<h2 class="h2">${PAY_UPI_ID ? "2. " : ""}Send payment screenshot</h2>
+      ${UP_ON ? `<h2 class="h2">${UPI_ID ? "2. " : ""}Send payment screenshot</h2>
       <form class="card" id="payForm" novalidate>
         <label class="fld" data-f="amount"><span>Amount paid (₹)</span><input name="amount" inputmode="decimal" placeholder="e.g. 12500"></label>
         <label class="fld" data-f="utr"><span>UTR / UPI Ref No.</span><input name="utr" autocapitalize="characters" placeholder="12-digit number from your UPI app"></label>
@@ -1134,7 +1139,8 @@ a{color:inherit;text-decoration:none}
       </form>` : ""}
       <div class="spacer"></div>`;
     const cp = $("copyUpi");
-    if (cp) cp.onclick = () => { (navigator.clipboard ? navigator.clipboard.writeText(PAY_UPI_ID) : Promise.reject()).then(() => toast("UPI ID copied"), () => toast(PAY_UPI_ID)); };
+    if (PAY_DEMO && !PAY_UPI_ID) $("upiBtn").onclick = e => { e.preventDefault(); toast("Preview: this opens GPay / PhonePe after setup"); };
+    if (cp) cp.onclick = () => { (navigator.clipboard ? navigator.clipboard.writeText(UPI_ID) : Promise.reject()).then(() => toast("UPI ID copied"), () => toast(UPI_ID)); };
     const sq = $("showQr");
     if (sq) sq.onclick = () => { sq.hidden = true; const b = $("qrBox"); b.hidden = false; drawQr(b, upiLink(o)); };
     const si = $("shotIn");
@@ -1190,12 +1196,13 @@ a{color:inherit;text-decoration:none}
     const body = JSON.stringify({ order:o.id, orderTotal:o.total, amount, utr,
       shop:me.shop||"", name:me.name||"", city:me.city||"", phone:me.phone||"", gst:me.gst||"",
       image: shotData.split(",")[1], mime:"image/jpeg" });
-    fetch(PAY_UPLOAD_URL, { method:"POST", body })     // text/plain body: no CORS pre-check needed
-      .then(r => r.json())
+    (PAY_UPLOAD_URL ? fetch(PAY_UPLOAD_URL, { method:"POST", body }).then(r => r.json())   // text/plain body: no CORS pre-check needed
+      : new Promise(ok => setTimeout(() => ok({ok:true}), 900)))                       // preview: nothing is sent
       .then(res => {
         if (!res.ok) throw new Error(res.error || "failed");
         o.pay = { at: Date.now(), amount, utr }; S.set("orders", orders.slice(0, 50));
         $("v-pay").innerHTML = `<div class="done"><div class="tick">${ICON.tick}</div><h2>Screenshot sent</h2>
+          ${PAY_DEMO && !PAY_UPLOAD_URL ? `<p style="color:var(--hot)">Preview: nothing was sent.</p>` : ""}
           <p>Order <b>${esc(o.id)}</b> · <b>${rs(amount)}</b><br>UTR ${esc(utr)}</p>
           <ol class="steps3"><li><span>Our team checks the payment in our bank.</span></li>
           <li><span>Then we dispatch your order and send you the bilty on WhatsApp.</span></li></ol>

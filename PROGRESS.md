@@ -2,7 +2,7 @@
 
 Last updated: 13 Nov 2026
 Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambey-dealer-app/
-(add `?demo=1` to see the Repeat order card with a sample order)
+(add `?demo=1` to see a sample order, and the payment screens in preview: My orders → Pay & upload screenshot)
 
 ## Done
 - Home screen (`index.html`): Jai Ambey logo, red planet-horizon glow, headline
