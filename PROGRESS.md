@@ -37,7 +37,8 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   Upload goes to a Google Apps Script in a NEW sheet "Jai Ambey App – Payments" (`apps-script/payments.gs`, `SETUP.md`):
   screenshot saved in Drive, one row per payment, red warning for a reused UTR or less than the app total,
   "Confirmed in bank" tick box for the team. Rule: never dispatch on a screenshot alone.
-  Cart = **pay now only** (Jayant, 13 Nov): pay by UPI, upload screenshot, **Place order**. No WhatsApp button and no
+  Cart = **pay now only** (Jayant, 13 Nov): pay by UPI, type UTR, choose the screenshot → the order is **placed automatically**
+  (if something is missing it shows what, and a Place order button is there as backup). No WhatsApp button and no
   "pay later". The whole order (products, qty, shop, note, amount, UTR, screenshot) goes to the **Orders** tab of the sheet;
   the order is saved on the phone only after it arrived (if the upload fails, the cart is kept).
   Until payments are switched on, the cart keeps "Send order on WhatsApp" so ordering never stops.
