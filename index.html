@@ -1091,10 +1091,10 @@ a{color:inherit;text-decoration:none}
           <div class="thumbs">${its.slice(0,6).map(x=>`<div>${img(byId[x.id],54)}</div>`).join("")}${its.length>6?`<div class="more">+${its.length-6}</div>`:""}</div>
           <div class="its">${its.map(x=>`${esc(byId[x.id].name)} <span>× ${x.n}</span>`).join("<br>")}
             ${gone ? `<br><span>${gone} item${gone>1?"s":""} no longer in the catalog</span>` : ""}</div>
-          ${o.pay ? `<div class="paid">${ICON.tick}Payment screenshot sent · ${rs(o.pay.amount)} · ${new Date(o.pay.at).toLocaleDateString("en-IN",{day:"numeric",month:"short"})}</div>` : ""}
+          ${o.pay ? `<div class="paid">${ICON.tick}Payment screenshot uploaded · ${rs(o.pay.amount)} · ${new Date(o.pay.at).toLocaleDateString("en-IN",{day:"numeric",month:"short"})}</div>` : ""}
           <div class="btns">
           ${its.length ? `<button type="button" class="pill pill-white" data-reorder="${i}">${ICON.redo}Reorder</button>` : ""}
-          ${PAY_ON ? `<a class="pill pill-outline" href="#pay/${encodeURIComponent(o.id)}">${o.pay ? "Send another payment" : "Pay & upload screenshot"}</a>` : ""}
+          ${PAY_ON ? `<a class="pill pill-outline" href="#pay/${encodeURIComponent(o.id)}">${o.pay ? "Upload another payment" : "Pay / Upload screenshot"}</a>` : ""}
           </div>
         </div>`; }).join("")}</div>`;
     }
@@ -1117,7 +1117,8 @@ a{color:inherit;text-decoration:none}
       <h1 class="ptitle">Pay for order</h1>
       ${PAY_DEMO ? `<div class="warnbox" style="margin-bottom:12px">Preview only. Nothing is paid or sent. Jai Ambey's real UPI ID goes here after setup.</div>` : ""}
       <div class="card"><div class="payhead"><b>${esc(o.id)}</b><span class="t">${rs(o.total)}</span></div>
-        <p class="note" style="margin-top:4px">App total. Pay the <b style="color:#fff">final bill</b> our team sends you (with GST and transport).</p></div>
+        <p class="note" style="margin-top:4px">App total. Pay the <b style="color:#fff">final bill</b> our team sends you (with GST and transport).</p>
+        ${UPI_ID && UP_ON ? `<a class="pill pill-outline" href="#" id="toShot" style="margin-top:14px">Already paid? Upload screenshot</a>` : ""}</div>
       ${UPI_ID ? `<h2 class="h2">1. Pay by UPI</h2>
       <div class="card">
         <a class="pill pill-white" href="${upiLink(o)}" id="upiBtn">Pay by UPI app</a>
@@ -1127,14 +1128,15 @@ a{color:inherit;text-decoration:none}
         <div id="qrBox" hidden></div>
         <p class="note">Above ₹1 lakh, UPI may not work. Ask us for bank details.</p>
       </div>` : ""}
-      ${UP_ON ? `<h2 class="h2">${UPI_ID ? "2. " : ""}Send payment screenshot</h2>
+      ${UP_ON ? `<h2 class="h2" id="shotHead">${UPI_ID ? "2. " : ""}Upload payment screenshot</h2>
       <form class="card" id="payForm" novalidate>
         <label class="fld" data-f="amount"><span>Amount paid (₹)</span><input name="amount" inputmode="decimal" placeholder="e.g. 12500"></label>
         <label class="fld" data-f="utr"><span>UTR / UPI Ref No.</span><input name="utr" autocapitalize="characters" placeholder="12-digit number from your UPI app"></label>
         <p class="note" style="margin:-6px 0 14px">Find it in your UPI app: open the payment, look for "UTR", "UPI Ref No." or "UPI transaction ID".</p>
-        <label class="shot" id="shotBox"><input type="file" accept="image/*" id="shotIn"><span id="shotTxt">Tap to choose the screenshot</span></label>
+        <span style="display:block;font-size:15px;font-weight:700;margin-bottom:6px">Payment screenshot</span>
+        <label class="shot" id="shotBox"><input type="file" accept="image/*" id="shotIn"><span id="shotTxt"><span class="pill pill-white" style="pointer-events:none;min-height:46px;padding:0 22px">Choose screenshot</span><br><span style="font-size:14px;color:var(--muted)">from your gallery</span></span></label>
         <div class="errmsg" id="payErr" hidden></div>
-        <div class="actions"><button type="submit" class="pill pill-white" id="paySend">Send screenshot</button></div>
+        <div class="actions"><button type="submit" class="pill pill-white" id="paySend">Upload screenshot</button></div>
         <p class="note">Your order is dispatched after our team sees the money in our bank.</p>
       </form>` : ""}
       <div class="spacer"></div>`;
@@ -1143,6 +1145,8 @@ a{color:inherit;text-decoration:none}
     if (cp) cp.onclick = () => { (navigator.clipboard ? navigator.clipboard.writeText(UPI_ID) : Promise.reject()).then(() => toast("UPI ID copied"), () => toast(UPI_ID)); };
     const sq = $("showQr");
     if (sq) sq.onclick = () => { sq.hidden = true; const b = $("qrBox"); b.hidden = false; drawQr(b, upiLink(o)); };
+    const ts = $("toShot");
+    if (ts) ts.onclick = e => { e.preventDefault(); $("shotHead").scrollIntoView({behavior:"smooth", block:"start"}); };
     const si = $("shotIn");
     if (si) si.onchange = () => pickShot(si.files[0]);
     const f = $("payForm");
@@ -1201,7 +1205,7 @@ a{color:inherit;text-decoration:none}
       .then(res => {
         if (!res.ok) throw new Error(res.error || "failed");
         o.pay = { at: Date.now(), amount, utr }; S.set("orders", orders.slice(0, 50));
-        $("v-pay").innerHTML = `<div class="done"><div class="tick">${ICON.tick}</div><h2>Screenshot sent</h2>
+        $("v-pay").innerHTML = `<div class="done"><div class="tick">${ICON.tick}</div><h2>Screenshot uploaded</h2>
           ${PAY_DEMO && !PAY_UPLOAD_URL ? `<p style="color:var(--hot)">Preview: nothing was sent.</p>` : ""}
           <p>Order <b>${esc(o.id)}</b> · <b>${rs(amount)}</b><br>UTR ${esc(utr)}</p>
           <ol class="steps3"><li><span>Our team checks the payment in our bank.</span></li>
@@ -1210,7 +1214,7 @@ a{color:inherit;text-decoration:none}
         window.scrollTo(0, 0);
       })
       .catch(e => {
-        btn.disabled = false; btn.textContent = "Send screenshot"; err.hidden = false;
+        btn.disabled = false; btn.textContent = "Upload screenshot"; err.hidden = false;
         err.textContent = /too_many/.test(e.message) ? "Too many uploads from this number. Please try again later or send it on WhatsApp."
           : /bad_/.test(e.message) ? "Please check the amount and UTR and try again."
           : "Could not send. Check your internet and try again.";
