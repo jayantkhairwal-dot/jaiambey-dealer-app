@@ -242,6 +242,10 @@ a{color:inherit;text-decoration:none}
   letter-spacing:.04em;text-transform:uppercase;padding:5px 9px;border-radius:999px}
 .soldout{width:100%;min-height:46px;border-radius:999px;border:1.5px solid rgba(255,255,255,.35);color:#D9D2D6;
   font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
+.soldtag.req{background:var(--red)}
+.askbtn{width:100%;min-height:46px;border-radius:999px;background:#25D366;color:#06210F;
+  font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;gap:6px;text-align:center}
+.askbtn svg{width:18px;height:18px}
 .pd-photo{position:relative}
 .pd-out{margin-top:16px;padding:14px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line);font-size:15px;line-height:1.45;color:#E8E2E5}
 .pd-out b{display:block;font-size:18px;color:#fff;margin-bottom:2px}
@@ -689,16 +693,26 @@ a{color:inherit;text-decoration:none}
 
   // Quantity control used on every product card
   const isOut = id => !!(byId[id] && byId[id].out);
+  const isReq = id => !!(byId[id] && byId[id].req && !byId[id].out);
+  const blocked = id => isOut(id) || isReq(id);
+  const rank = p => p.out ? 2 : p.req ? 1 : 0;      // normal, then on request, then sold out
+  function askLink(p){
+    const who = me.shop ? `\n\n${me.shop}${me.city ? ", " + me.city : ""}` : "";
+    const msg = `Hi Jai Ambey, I need *${p.name}* (${p.id}, ${rs(p.price)}).\nQuantity: \nCan you arrange it?${who}`;
+    return (ORDER_WHATSAPP ? `https://wa.me/${ORDER_WHATSAPP}` : `https://wa.me/`) + `?text=${encodeURIComponent(msg)}`;
+  }
   function ctl(id){
     if (isOut(id)) return `<div class="soldout">Sold out</div>`;
+    if (isReq(id)) return `<a class="askbtn" href="${askLink(byId[id])}" target="_blank" rel="noopener">${ICON.wa}Ask for it</a>`;
     const n = cart[id] || 0;
     return n
       ? `<div class="step" data-id="${id}"><button type="button" data-d="-1" aria-label="One less">−</button><input inputmode="numeric" pattern="[0-9]*" value="${n}" aria-label="Quantity"><button type="button" data-d="1" aria-label="One more">+</button></div>`
       : `<button type="button" class="add" data-add="${id}">${ICON.plus}Add</button>`;
   }
+  const tag = p => p.out ? `<span class="soldtag">Sold out</span>` : p.req ? `<span class="soldtag req">On request</span>` : "";
   function card(p){
     return `<article class="prod${p.out ? " out" : ""}">
-      <a class="ph" href="#product/${p.id}" aria-label="${esc(p.name)}">${img(p, 168)}${p.out ? `<span class="soldtag">Sold out</span>` : ""}</a>
+      <a class="ph" href="#product/${p.id}" aria-label="${esc(p.name)}">${img(p, 168)}${tag(p)}</a>
       <div class="body">
         <a class="name" href="#product/${p.id}">${esc(p.name)}</a>
         <div class="price">${rs(p.price)}${p.unit ? `<small>${esc(p.unit)}</small>` : ""}</div>
@@ -708,7 +722,7 @@ a{color:inherit;text-decoration:none}
 
   // ---------- cart state ----------
   function setQty(id, n, quiet){
-    if (isOut(id) && n > (cart[id] || 0)) { toast("Sold out · back soon"); return; }
+    if (blocked(id) && n > (cart[id] || 0)) { toast(isOut(id) ? "Sold out · back soon" : "On request · ask us on WhatsApp"); return; }
     n = Math.max(0, Math.min(9999, parseInt(n, 10) || 0));
     const before = cart[id] || 0;
     if (n) cart[id] = n; else delete cart[id];
@@ -735,13 +749,13 @@ a{color:inherit;text-decoration:none}
     }
   }
   function addOrderToCart(o){
-    const ok = o.items.filter(x => byId[x.id] && !isOut(x.id));
+    const ok = o.items.filter(x => byId[x.id] && !blocked(x.id));
     ok.forEach(x => cart[x.id] = x.n);   // same quantities as last time (not doubled)
     S.set("cart", cart);
     updateCartUI(true);
-    const sold = o.items.filter(x => isOut(x.id)).length;
-    const missing = o.items.length - ok.length - sold;
-    toast(`${ok.length} items added to cart` + (sold ? ` · ${sold} sold out` : "") + (missing ? ` · ${missing} no longer available` : ""));
+    const sold = o.items.filter(x => isOut(x.id)).length, req = o.items.filter(x => isReq(x.id)).length;
+    const missing = o.items.length - ok.length - sold - req;
+    toast(`${ok.length} items added to cart` + (sold ? ` · ${sold} sold out` : "") + (req ? ` · ${req} on request` : "") + (missing ? ` · ${missing} no longer available` : ""));
     location.hash = "#cart";
   }
 
@@ -766,7 +780,7 @@ a{color:inherit;text-decoration:none}
         <div class="ph">${cover ? img(cover, 200) : ""}</div></a>`;
     }).join("");
     $("rail").innerHTML = FAVOURITES.map(id => byId[id]).filter(Boolean)
-      .sort((a,b) => (a.out?1:0) - (b.out?1:0)).map(card).join("");
+      .sort((a,b) => rank(a) - rank(b)).map(card).join("");
 
     const last = orders[0], box = $("reorderCard");
     const items = last && last.items ? last.items.filter(x => byId[x.id]) : [];
@@ -816,7 +830,7 @@ a{color:inherit;text-decoration:none}
       high: (a,b) => b.price - a.price || base(a,b),
       az:   (a,b) => a.name.localeCompare(b.name)
     };
-    return list.sort((a,b) => (a.out?1:0) - (b.out?1:0) || by[sort](a,b));
+    return list.sort((a,b) => rank(a) - rank(b) || by[sort](a,b));
   }
   function renderGrid(){
     const list = filtered();
@@ -850,14 +864,16 @@ a{color:inherit;text-decoration:none}
     }
     pdN = cart[id] || QUICK_QTY[0];
     const more = P.filter(x => x.cat === p.cat && x.id !== p.id)
-      .sort((a,b) => (a.out?1:0) - (b.out?1:0) || (favRank[a.id] ?? 999) - (favRank[b.id] ?? 999)).slice(0, 8);
+      .sort((a,b) => rank(a) - rank(b) || (favRank[a.id] ?? 999) - (favRank[b.id] ?? 999)).slice(0, 8);
     v.innerHTML = `
       <button type="button" class="back" id="pdBack">${ICON.back}Back</button>
-      <div class="pd-photo">${img(p, 520, true)}${p.out ? `<span class="soldtag">Sold out</span>` : ""}</div>
+      <div class="pd-photo">${img(p, 520, true)}${tag(p)}</div>
       <div class="pd-cat">${esc(p.cat)}</div>
       <h1 class="pd-name">${esc(p.name)}</h1>
       <div class="pd-price">${rs(p.price)}${unitTxt(p)}</div>
-      ${p.out ? `<div class="pd-out"><b>Sold out</b>This product is out of stock right now. It will be back here as soon as it is in stock.</div>
+      ${p.out || p.req ? `${p.out ? `<div class="pd-out"><b>Sold out</b>This product is out of stock right now. It will be back here as soon as it is in stock.</div>`
+        : `<div class="pd-out"><b>On request</b>We don't keep this in regular stock, but we can arrange it for you. Ask us on WhatsApp with the quantity you need.</div>
+        <a class="askbtn" style="margin-top:14px;min-height:54px;font-size:17px" href="${askLink(p)}" target="_blank" rel="noopener">${ICON.wa}Ask for it on WhatsApp</a>`}
       ${more.length ? `<section class="sec"><div class="sec-head"><div><h2>More ${esc(p.cat)}</h2></div>
         <a class="link" href="#catalog/${p.cat.toLowerCase()}">See all</a></div>
         <div class="rail">${more.map(card).join("")}</div></section>` : ""}
@@ -874,7 +890,7 @@ a{color:inherit;text-decoration:none}
         <div class="rail">${more.map(card).join("")}</div></section>` : ""}
       <div class="spacer"></div>`}`;
     $("pdBack").onclick = () => history.length > 1 ? history.back() : (location.hash = "#catalog");
-    if (p.out) return;
+    if (p.out || p.req) return;
     $("pdBack").onclick = () => history.length > 1 ? history.back() : (location.hash = "#catalog");
     $("pdQuick").onclick = e => { const b = e.target.closest("[data-q]"); if (b){ pdN = +b.dataset.q; refreshProductQty(true); } };
     $("pdStep").onclick = e => { const b = e.target.closest("[data-d]"); if (b){ pdN = Math.max(1, pdN + (+b.dataset.d)); refreshProductQty(true); } };
@@ -1111,18 +1127,20 @@ a{color:inherit;text-decoration:none}
   // ---------- start ----------
   updateCartUI(false);
   route();
-  const soldOut = fetch("data/sold-out.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : []).catch(() => []);
+  const getList = f => fetch(f, {cache:"no-cache"}).then(r => r.ok ? r.json() : []).catch(() => []);
+  const soldOut = Promise.all([getList("data/sold-out.json"), getList("data/on-request.json")]);
   fetch("data/products.json")
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(list => soldOut.then(out => [list, out]))
-    .then(([list, out]) => {
-      const outIds = new Set((Array.isArray(out) ? out : []).map(x => typeof x === "string" ? x : x && x.id));
-      list.forEach(p => p.out = outIds.has(p.id));
+    .then(([list, [out, req]]) => {
+      const ids = a => new Set((Array.isArray(a) ? a : []).map(x => typeof x === "string" ? x : x && x.id));
+      const outIds = ids(out), reqIds = ids(req);
+      list.forEach(p => { p.out = outIds.has(p.id); p.req = reqIds.has(p.id); });
       P = list; byId = Object.fromEntries(P.map(p => [p.id, p]));
       // Take sold-out products out of a saved cart
-      const gone = Object.keys(cart).filter(isOut);
+      const gone = Object.keys(cart).filter(blocked);
       if (gone.length){ gone.forEach(id => delete cart[id]); S.set("cart", cart); updateCartUI(false);
-        setTimeout(() => toast(`${gone.length} item${gone.length>1?"s":""} in your cart sold out`), 400); }
+        setTimeout(() => toast(`${gone.length} item${gone.length>1?"s":""} in your cart ${gone.length>1?"are":"is"} no longer available`), 400); }
       FAVOURITES.forEach((id, i) => favRank[id] = i);
       current = null; route();
     })
