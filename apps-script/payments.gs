@@ -1,15 +1,21 @@
 /**
- * Jai Ambey dealer app – payment screenshots
+ * Jai Ambey dealer app – orders and payment screenshots
  *
  * Lives inside its own Google Sheet ("Jai Ambey App – Payments"), NOT the FMS.
- * The app sends: order no., amount, UTR, shop details and the screenshot.
- * This script saves the screenshot in a Drive folder and adds one row to the "Payments" tab.
- * It can only ADD rows. It never sends any data back to the app.
+ * - New order from the cart (paid by UPI): one row in the "Orders" tab with the products,
+ *   amount, UTR and the screenshot.
+ * - Extra payment for an old order (My orders → Pay): one row in the "Payments" tab.
+ * Screenshots are saved in a Drive folder. The script can only ADD rows.
+ * It never sends any data back to the app.
  *
  * Setup: see apps-script/SETUP.md
  */
 
 const TAB = "Payments";
+const ORDERS_TAB = "Orders";
+const ORDERS_HEAD = ["Received at", "Order no.", "Shop", "Name", "City", "Mobile", "GST",
+  "Products", "Total qty", "Order total (₹)", "Note", "Amount paid (₹)", "UTR / Ref no.", "Screenshot",
+  "Warning", "Confirmed in bank", "Checked by", "Dispatched"];
 const FOLDER_NAME = "Jai Ambey App – Payment Screenshots";
 const HEAD = ["Received at", "Order no.", "Shop", "Name", "City", "Mobile", "GST",
   "Amount paid (₹)", "UTR / Ref no.", "App order total (₹)", "Screenshot",
@@ -20,6 +26,7 @@ const MAX_PER_HOUR = 10;                    // uploads per mobile number per hou
 /** Run this once from the editor (select "setup", press Run) to create the tab and the folder. */
 function setup() {
   sheet_();
+  ordersSheet_();
   folder_();
 }
 
@@ -53,25 +60,37 @@ function doPost(e) {
     const lock = LockService.getScriptLock();
     lock.waitLock(20000);
     try {
-      const sh = sheet_();
+      const sh = sheet_(), osh = ordersSheet_();
 
-      // ---- same UTR used before? (one payment shown for two orders) ----
+      // ---- same UTR used before, in either tab? (one payment shown for two orders) ----
       const warn = [];
-      const last = sh.getLastRow();
-      if (last > 1) {
-        const old = sh.getRange(2, 2, last - 1, 8).getValues();   // Order no. … UTR
-        old.forEach((r, i) => {
-          if (String(r[7]).toUpperCase() === utr) warn.push(`SAME UTR as row ${i + 2} (order ${r[0]})`);
-        });
-      }
+      findUtr_(osh, 13, utr).forEach(r => warn.push(`SAME UTR as Orders row ${r}`));
+      findUtr_(sh, 9, utr).forEach(r => warn.push(`SAME UTR as Payments row ${r}`));
       const total = Number(d.orderTotal) || "";
-      if (total && amount < total) warn.push("Paid less than app total");
+      if (total && amount < total) warn.push("Paid less than order total");
 
       // ---- save the screenshot ----
       const ext = d.mime === "image/png" ? "png" : d.mime === "image/webp" ? "webp" : "jpg";
       const blob = Utilities.newBlob(bytes, d.mime, `${order}_${utr}.${ext}`);
       const file = folder_().createFile(blob);
 
+      if (Array.isArray(d.items) && d.items.length) {
+        // ---- new order placed from the cart ----
+        const items = d.items.slice(0, 200).map((x, i) =>
+          `${i + 1}. ${clean_(x.name)} (${clean_(x.id)}) × ${Number(x.qty) || 0} @ ₹${Number(x.price) || 0}`).join("\n");
+        osh.appendRow([new Date(), order, clean_(d.shop), clean_(d.name), clean_(d.city), phone, clean_(d.gst),
+          items, Number(d.qty) || "", total, clean_(d.note), amount, "'" + utr, "",
+          warn.join(" · "), false, "", false]);
+        const r = osh.getLastRow();
+        osh.getRange(r, 8).setWrap(true);
+        osh.getRange(r, 14).setFormula(`=HYPERLINK("${file.getUrl()}","View screenshot")`);
+        osh.getRange(r, 16).insertCheckboxes();
+        osh.getRange(r, 18).insertCheckboxes();
+        if (warn.length) osh.getRange(r, 15).setBackground("#F8D7D5").setFontWeight("bold");
+        return json_({ ok: true });
+      }
+
+      // ---- extra payment for an order placed earlier ----
       sh.appendRow([new Date(), order, clean_(d.shop), clean_(d.name), clean_(d.city), phone,
         clean_(d.gst), amount, "'" + utr, total,
         "", warn.join(" · "), false, "", ""]);
@@ -90,6 +109,27 @@ function doPost(e) {
 }
 
 // ---------- helpers ----------
+function ordersSheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(ORDERS_TAB);
+  if (!sh) {
+    sh = ss.insertSheet(ORDERS_TAB, 0);
+    sh.getRange(1, 1, 1, ORDERS_HEAD.length).setValues([ORDERS_HEAD]).setFontWeight("bold").setBackground("#111").setFontColor("#fff");
+    sh.setFrozenRows(1);
+    sh.setColumnWidth(8, 360);
+    sh.setColumnWidth(15, 260);
+  }
+  return sh;
+}
+
+// Rows (numbers) in sheet sh whose column col holds this UTR
+function findUtr_(sh, col, utr) {
+  const last = sh.getLastRow();
+  if (last < 2) return [];
+  return sh.getRange(2, col, last - 1, 1).getValues()
+    .map((r, i) => String(r[0]).toUpperCase() === utr ? i + 2 : 0).filter(Boolean);
+}
+
 function sheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sh = ss.getSheetByName(TAB);

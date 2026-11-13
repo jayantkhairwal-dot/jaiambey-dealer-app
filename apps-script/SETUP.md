@@ -1,8 +1,9 @@
 # Payment screenshots – setup (about 15 minutes, one time)
 
-What this does: when a dealer uploads a payment screenshot in the app, the screenshot is saved in a
-Google Drive folder and one row is added to a new Google Sheet. Your team checks the money in the bank
-and ticks **Confirmed in bank**.
+What this does: dealers pay by UPI in the cart, upload the screenshot and tap **Place order**.
+The order (products, quantities, shop, amount, UTR) arrives as one row in the **Orders** tab of a new Google Sheet,
+and the screenshot is saved in a Google Drive folder. Extra payments for old orders go to the **Payments** tab.
+Your team checks the money in the bank and ticks **Confirmed in bank**, then **Dispatched**.
 
 This uses a **new, separate sheet**. It does not touch the FMS, the IMS or the Order Entry sheet.
 
@@ -28,7 +29,7 @@ This uses a **new, separate sheet**. It does not touch the FMS, the IMS or the O
    - *View and manage spreadsheets that this application has been installed in* (only this sheet)
    - *See, edit, create and delete only the specific Google Drive files you use with this app* (only its own folder)
    If you see "all your Google Drive files" or "all your spreadsheets", stop and ask Claude.
-4. Press **Allow**. A **Payments** tab appears in the sheet, and a folder **Jai Ambey App – Payment Screenshots** in your Drive.
+4. Press **Allow**. **Orders** and **Payments** tabs appear in the sheet, and a folder **Jai Ambey App – Payment Screenshots** in your Drive.
 
 ## 4. Publish it
 1. **Deploy → New deployment** → gear icon → **Web app**.
@@ -41,12 +42,13 @@ Later changes to the script: **Deploy → Manage deployments → pencil → Vers
 
 ## Daily use – the one rule
 **Never dispatch on a screenshot alone.** A screenshot can be edited or copied.
-For each new row in **Payments**:
+For each new row in **Orders** (and **Payments**):
 1. Open your bank / UPI business app and find the payment by the **UTR** and **amount**.
 2. Only if the money is really there: tick **Confirmed in bank** and write your name in **Checked by**.
 3. Rows with a red **Warning** need extra care:
    - *SAME UTR as row …*: the same payment was sent for two orders.
-   - *Paid less than app total*: check against the final bill.
+   - *Paid less than order total*: check against the bill.
+4. After packing and sending: tick **Dispatched**.
 
 ## Good to know
 - The script can only **add** rows. It never sends any data back to the app or to anyone.
