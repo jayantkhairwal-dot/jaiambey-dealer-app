@@ -2,7 +2,7 @@
 
 Last updated: 13 Nov 2026
 Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambey-dealer-app/
-(add `?demo=1` to see a sample order, and the payment screens in preview: My orders → Pay & upload screenshot)
+(add `?demo=1` to see a sample order and the payment screens in preview: Cart → pay + screenshot → order placed; nothing is sent)
 
 ## Done
 - Home screen (`index.html`): Jai Ambey logo, red planet-horizon glow, headline
@@ -45,24 +45,24 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   My orders → Pay / Upload screenshot stays for extra payments (Payments tab).
   Switch on by filling `PAY_UPI_ID` and `PAY_UPLOAD_URL` in `index.html`.
 
-## Waiting on Jayant
-1. Payments: send the business UPI ID, and do `apps-script/SETUP.md` (or MIS) and send the web app URL.
-2. WhatsApp: on hold until WATI. For now WhatsApp opens and the dealer picks the contact.
-3. 13 Nov photo round 2 done (Jayant's answers): new photos for P001 BO-15, P004 Poppy, P009 BO-21, P013 Grandy,
-   P016 Big Fresh, P018 Designer Perfume, P030 Jello, P034 Lure Hanging, P035 Stop-O, P064 Godrej Dashboard (aer twist),
-   P067 Airpro Hanging, P068 Airpro Spray, P072 Concept, P086 Keizo Can Dashboard; added P110 Black Odor BO-49 (Rs 300).
-   Kept current: Solar Flag, BO-12, BO-13, BO-41. Done: leather jar added as P111 Black Odor BO-4 (Rs 200);
-   X-269 is BO-40 (already in app at Rs 550, kept the clean photo); ice-cube jar not sold, skipped.
-4. Other doubtful photos: P005 BO-30, P047 BO-32, P024 Fighter Jet Solar ₹550 (no correct photo).
-5. Stock check vs IMS (13 Nov, read-only, figures of 6 Nov): 61 in stock, 29 out, 11 not kept in IMS
-   (9 Solars + Xiang Meng, Poppy). Big Fresh and Involve Eminence removed from the app. IMS "Closing Stock"
-   column is out of line from row "Can (Vedashri)" down: MIS to fix before live stock is connected.
+## Waiting on Jayant (start here next session)
+1. **Payments switch-on:** send the business UPI ID (bank current account / PhonePe / Paytm / GPay for Business),
+   and do `apps-script/SETUP.md` (Jayant or MIS, ~15 min) and send the web app URL ending in `/exec`.
+   Then: fill `PAY_UPI_ID` + `PAY_UPLOAD_URL`, test one real ₹1 order end to end, check the Orders tab and screenshot.
+2. **IMS clean-up (MIS):** "Closing Stock" column is out of line from row "Can (Vedashri)" down; many best-sellers show
+   negative stock (missing "In" entries). Until fixed, re-check the 29 sold-out products, especially favourites
+   Godrej Aer Hanging, Veda Shree Bori, Involve Spray, BO-13, BO-23. 7 products can't be read (BO-40, Areon Sport Lux,
+   Areon Pearls, Involve Dashboard, Veda Shree Spray, Air Gloss, Addix Black Ice).
+3. **Photos:** real photo for P024 Fighter Jet Solar ₹550 (shows BO-13 now); doubtful P005 BO-30, P047 BO-32.
+4. **Product names:** renaming to IMS names was cancelled (13 Nov); names stay as they are.
+5. WhatsApp number: on hold until WATI (on-request "Ask for it" and the pre-payment WhatsApp order use it).
 6. Decide: add a "don't show in Google" tag until launch? Hide prices behind a login or PIN?
 7. Google Drive leftovers from the tracker test (Jayant can delete them): sheet "fms jai ambey app"
    and Apps Script project "jai ambey order tracking".
 
 ## Next
-1. Switch on payments once the UPI ID and web app URL arrive; test one real ₹1 payment end to end.
-2. Jayant tests the full app on his phone and sends changes.
+1. Switch on payments (item 1 above) and test with a real ₹1 order.
+2. Jayant tests the full app on his phone (`?demo=1` for the payment preview) and sends changes.
 3. Before sharing with dealers: merge to `main`, switch GitHub Pages to `main`.
-4. Later (from CLAUDE.md): Google Apps Script backend for orders, live In stock / Out of stock, WATI confirmations, New arrivals.
+4. Later (from CLAUDE.md): live In stock / Out of stock from the IMS (after clean-up), WATI confirmations,
+   New arrivals, connect the app's orders to the new company FMS.
