@@ -14,6 +14,9 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 - 13 Nov: removed Dyna Fresh Hanging (no longer stocked); merged Money Solar into Bluzon Kode
   (same perfume; now "Bluzon Kode (Money) Solar", Solar, Rs 300). Now 108 products.
 - 13 Nov: removed Big Fresh and Involve Eminence (not kept in IMS). Now 106 products.
+- 13 Nov: **Sold out** label. Products listed in `data/sold-out.json` show "Sold out", can't be added to the cart,
+  move to the end of lists, are dropped from saved carts and skipped on Reorder. 29 marked from the IMS (6 Nov figures).
+  To bring one back: delete its line from `data/sold-out.json` (or ask Claude). Later this can come live from the IMS.
 - 11 Nov: home approved; built the full app in `index.html` (one page, a separate address per screen):
   Catalog (search by name or code, category chips, sort, floating "View cart" bar),
   Product page (big photo, quick qty 6/12/24/48, stepper, "More in category"),

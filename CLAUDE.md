@@ -11,6 +11,7 @@ Dealers across India open one link, browse the catalog, add items with quantitie
 ## Current content
 - `data/products.json`: 106 car perfumes (id, name, cat, price in INR, unit, img).
   Categories: Dashboard, Hanging, Spray, Solar. `unit` is "per pc" / "per box" or empty.
+- `data/sold-out.json`: ids of products shown as "Sold out" (can't be ordered). Remove an id to make it available again.
 - `img/`: one 560x560 white-background photo per product.
 - `reference/v1-index.html`: first working prototype (catalog, cart, register, WhatsApp order, order history, reorder). Use it for features and flow, not for design.
 - More categories (wheel caps, door guards, gear knobs, mobile stands, car care) will be added later.
