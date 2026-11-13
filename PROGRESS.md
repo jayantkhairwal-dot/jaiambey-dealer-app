@@ -13,6 +13,7 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   added Black Odor BO-1, BO-2, BO-4, BO-40, BO-41, BO-49 and Helicopter Solar. Now 110 products.
 - 13 Nov: removed Dyna Fresh Hanging (no longer stocked); merged Money Solar into Bluzon Kode
   (same perfume; now "Bluzon Kode (Money) Solar", Solar, Rs 300). Now 108 products.
+- 13 Nov: removed Big Fresh and Involve Eminence (not kept in IMS). Now 106 products.
 - 11 Nov: home approved; built the full app in `index.html` (one page, a separate address per screen):
   Catalog (search by name or code, category chips, sort, floating "View cart" bar),
   Product page (big photo, quick qty 6/12/24/48, stepper, "More in category"),
@@ -36,7 +37,7 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
    X-269 is BO-40 (already in app at Rs 550, kept the clean photo); ice-cube jar not sold, skipped.
 4. Other doubtful photos: P005 BO-30, P047 BO-32, P024 Fighter Jet Solar ₹550 (no correct photo).
 5. Stock check vs IMS (13 Nov, read-only, figures of 6 Nov): 61 in stock, 29 out, 11 not kept in IMS
-   (9 Solars + Xiang Meng, Poppy). Big Fresh and Involve Eminence not found in IMS. IMS "Closing Stock"
+   (9 Solars + Xiang Meng, Poppy). Big Fresh and Involve Eminence removed from the app. IMS "Closing Stock"
    column is out of line from row "Can (Vedashri)" down: MIS to fix before live stock is connected.
 6. Decide: add a "don't show in Google" tag until launch? Hide prices behind a login or PIN?
 7. Google Drive leftovers from the tracker test (Jayant can delete them): sheet "fms jai ambey app"
