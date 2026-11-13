@@ -9,8 +9,7 @@ Dealers across India open one link, browse the catalog, add items with quantitie
 - Jai Ambey's team receives the orders.
 
 ## Current content
-- `data/products.json`: 106 car perfumes (id, name, cat, price in INR, unit, img, aka).
-  `name` = the item name in the JAI AMBEY - IMS sheet. `aka` = older/common name, used only for search.
+- `data/products.json`: 106 car perfumes (id, name, cat, price in INR, unit, img).
   Categories: Dashboard, Hanging, Spray, Solar. `unit` is "per pc" / "per box" or empty.
 - `data/sold-out.json`: ids of products shown as "Sold out" (can't be ordered). Remove an id to make it available again.
 - `data/on-request.json`: ids of products not kept in stock; shown "On request" with an "Ask for it" WhatsApp button instead of Add.
