@@ -11,7 +11,8 @@ Dealers across India open one link, browse the catalog, add items with quantitie
 ## Current content
 - `data/products.json`: 309 products: 106 car perfumes + 203 car accessories (id, name, cat, price in INR or null, unit, img, brand). price null = "Price on request" (Ask button).
   Size variants: products with the same `grp` (e.g. LED headlights, `v` = "H4") show as ONE card ("from ₹…", "Choose size");
-  the size is picked on the product page. Each size keeps its own id, price and sold-out state.
+  the type is picked from a "Type" dropdown on the card (price changes with it) or on the product page.
+  Each type keeps its own id, price and sold-out state.
   Perfume categories: Dashboard, Hanging, Spray, Solar. Accessory categories: see CAT_GROUPS in index.html.
   `brand` ("Bluzon") gives the product a home section and a catalog chip (BRANDS in index.html). Accessory ids start with A.
   Categories: Dashboard, Hanging, Spray, Solar. `unit` is "per pc" / "per box" or empty.

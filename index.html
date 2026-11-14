@@ -231,7 +231,10 @@ a{color:inherit;text-decoration:none}
 .prod .name{font-size:15px;font-weight:600;line-height:1.25;min-height:2.5em;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .prod .price{margin-top:6px;font-size:20px;font-weight:800;letter-spacing:-.02em}
-.sizes-note{font-size:13px;color:#C9C1C5;font-weight:600;margin-top:4px;line-height:1.3}
+.vsel{display:flex;align-items:center;gap:8px;margin-top:8px}
+.vsel span{font-size:13px;font-weight:700;color:#C9C1C5}
+.vsel select{flex:1;min-width:0;min-height:40px;border-radius:12px;background:#0F0D11;color:#fff;border:1.5px solid rgba(255,255,255,.35);
+  font:inherit;font-weight:700;font-size:15px;padding:0 10px}
 .sizes{flex-wrap:wrap}
 .sizes button{position:relative}
 .sizes button.off{opacity:.5}
@@ -783,13 +786,17 @@ a{color:inherit;text-decoration:none}
       const live = vs.filter(x => !x.out).length ? vs.filter(x => !x.out) : vs;
       const pr = live.map(x => x.price).filter(Boolean), mn = Math.min(...pr), mx = Math.max(...pr);
       const ptxt = !pr.length ? "Price on request" : mn === mx ? rs(mn) : "from " + rs(mn);
-      return `<article class="prod${out ? " out" : ""}">
-      <a class="ph" href="#product/${go.id}" aria-label="${esc(p.grp)}">${img(p, 168)}${out ? `<span class="soldtag">Sold out</span>` : ""}</a>
+      // Type picker right on the card: price follows the chosen type, Add adds that type
+      const sel = vs.find(x => !x.out && x.price) || go;
+      return `<article class="prod${out ? " out" : ""}" data-grp="${esc(p.grp)}">
+      <a class="ph" href="#product/${sel.id}" aria-label="${esc(p.grp)}">${img(p, 168)}${out ? `<span class="soldtag">Sold out</span>` : ""}</a>
       <div class="body">
-        <a class="name" href="#product/${go.id}">${esc(p.grp)}</a>
-        <div class="price${pr.length ? "" : " ask"}">${ptxt}</div>
-        <div class="sizes-note">${vs.length} sizes: ${vs.map(x => esc(x.v)).join(", ")}</div>
-        <div class="ctl">${out ? `<div class="soldout">Sold out</div>` : `<a class="add" href="#product/${go.id}">Choose size</a>`}</div>
+        <a class="name" href="#product/${sel.id}">${esc(p.grp)}</a>
+        <div class="price${sel.price ? "" : " ask"}" data-vprice>${priceTxt(sel)}</div>
+        <label class="vsel"><span>Type</span><select data-vsel aria-label="Type">${vs.map(x =>
+          `<option value="${x.id}"${x === sel ? " selected" : ""}${x.out ? " disabled" : ""}>${esc(x.v)}${x.out ? " (sold out)" : ""}</option>`).join("")}</select></label>
+        <div class="ctl">${out ? `<div class="soldout">Sold out</div>` : sel.price ? `<button type="button" class="add" data-add="${sel.id}" data-vadd>${ICON.plus}Add</button>`
+          : `<a class="askbtn" href="${askLink(sel)}" target="_blank" rel="noopener">${ICON.wa}Ask for it</a>`}</div>
       </div></article>`;
     }
     return `<article class="prod${p.out ? " out" : ""}">
@@ -843,11 +850,21 @@ a{color:inherit;text-decoration:none}
   // Delegated taps/edits for every quantity control on the page
   document.addEventListener("click", e => {
     const a = e.target.closest("[data-add]");
+    if (a && a.hasAttribute("data-vadd")){ const id = a.dataset.add; setQty(id, (cart[id]||0) + 1, true);
+      toast(`Added · ${byId[id].name} · in cart ${cart[id]}`); return; }
     if (a){ setQty(a.dataset.add, (cart[a.dataset.add]||0) + 1); return; }
     const d = e.target.closest(".step [data-d]");
     if (d && !d.closest("#pdStep")){ const id = d.closest(".step").dataset.id; setQty(id, (cart[id]||0) + (+d.dataset.d)); }
   });
   document.addEventListener("change", e => {
+    if (e.target.matches("[data-vsel]")){
+      const v = byId[e.target.value], c = e.target.closest(".prod");
+      const pr = c.querySelector("[data-vprice]"); pr.textContent = priceTxt(v); pr.classList.toggle("ask", !v.price);
+      c.querySelectorAll("a.ph, a.name").forEach(a => a.href = "#product/" + v.id);
+      c.querySelector(".ctl").innerHTML = v.price ? `<button type="button" class="add" data-add="${v.id}" data-vadd>${ICON.plus}Add</button>`
+        : `<a class="askbtn" href="${askLink(v)}" target="_blank" rel="noopener">${ICON.wa}Ask for it</a>`;
+      return;
+    }
     if (e.target.matches(".step[data-id] input")) setQty(e.target.closest(".step").dataset.id, e.target.value);
   });
   document.addEventListener("focusin", e => { if (e.target.matches(".step input")) e.target.select(); });
