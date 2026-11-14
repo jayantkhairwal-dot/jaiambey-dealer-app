@@ -54,6 +54,17 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   (Fusion Android, Cardi tail light, Sports mat, Windek 5405, IPH M6T). Now 186 products.
   Remaining items for later: Drive folder "MDO Image - Remaining (for later)".
 
+- 14 Nov: **68 more Bluzon products** from the Bluzon catalogue, only items in the IMS with a sales price
+  (ids A081–A148, photos img/bz-*.jpg cut from the catalogue PDF). LED headlights are one product per bulb size
+  (244W Eagle, 340W Bull, 324W Aeroplane, 240W Tri-Colour, 4300K 240W), projectors 2"/3", auxiliary light, cameras,
+  DVRs, Androids (Diamond X80, T5), chargers CC-12..15, BT receiver, MH-05 holder, damping sheets, horn 9003,
+  central locking, speakers, bass tubes, subwoofers, 2-ch amp, 8GA kits, RCA cable, vacuum. 9 sold out per IMS. Now 254 products.
+  Bluzon IMS items NOT added (no sales price or unclear catalogue model): LED 155W, Fish Eye camera, LED camera,
+  3-Way DVR 517, 4G DVR 517, DVR USB B21D, Apple CarPlay Android 4+64, T5 Android with DVR, Car MP3 Player FM,
+  Tire Inflator (BZ), Amplifier 4-ch, Loud Speaker 2.5", Square projector 2", 2" grill projectors, Fog light (BZ),
+  Charger 4.2A, Steering covers (BZ), Center locking 1-door, Component 240W, Double woofer, LED 4300K 9006,
+  LED 324W 9005/9012/H27, LED 244W/340W H27, 3" 3-eye single colour.
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: ₹3,300 (WhatsApp) or ₹3,500 (sheet)?
 2. #11/#12/#17 ATM lamps: one product at ₹225 (app)? or plain ₹160 + app ₹225?
