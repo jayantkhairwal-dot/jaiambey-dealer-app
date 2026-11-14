@@ -59,17 +59,20 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   (244W Eagle, 340W Bull, 324W Aeroplane, 240W Tri-Colour, 4300K 240W), projectors 2"/3", auxiliary light, cameras,
   DVRs, Androids (Diamond X80, T5), chargers CC-12..15, BT receiver, MH-05 holder, damping sheets, horn 9003,
   central locking, speakers, bass tubes, subwoofers, 2-ch amp, 8GA kits, RCA cable, vacuum. 9 sold out per IMS. Now 254 products.
-  Bluzon IMS items NOT added (no sales price or unclear catalogue model): LED 155W, Fish Eye camera, LED camera,
-  3-Way DVR 517, 4G DVR 517, DVR USB B21D, Apple CarPlay Android 4+64, T5 Android with DVR, Car MP3 Player FM,
-  Tire Inflator (BZ), Amplifier 4-ch, Loud Speaker 2.5", Square projector 2", 2" grill projectors, Fog light (BZ),
-  Charger 4.2A, Steering covers (BZ), Center locking 1-door, Component 240W, Double woofer, LED 4300K 9006,
-  LED 324W 9005/9012/H27, LED 244W/340W H27, 3" 3-eye single colour.
+- 14 Nov (Jayant: "if it is in the IMS, add it"): **55 more** (A149–A203). All remaining Bluzon IMS items
+  (closest catalogue photo where the model was unclear; img/photo-soon.jpg where there is no photo: Square projector 2",
+  DVR USB B21D, Double woofer, Loud speaker 2.5" x2) + MDO leftovers in IMS: ATM lamp ₹160, ATM lamp with app ₹225,
+  IPH Polar moment lens ₹3,300, SIPL combo kits (13 cars), Dosoon steering covers (10/6/5 pcs).
+  Products with no sales price have price null -> shown "Price on request" with the Ask button (27 products).
+  Sold out per IMS: 20 more. Now 309 products. Not added: MDO #65 (AVIF), #67 BO-LT08 and #86 Hyperdrive (NA, not in IMS).
+  To check with Jayant: unclear photo matches (155W = LT-07 photo, DVR 517 3-way/4G, MP3 = 2201, Tyre inflator = TI-71,
+  CarPlay Android, 4-ch amp ₹600?), ATM lamp photos, Polar lens price (₹3,300 vs ₹3,500), combo kit prices.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
-1. #20 IPH Polar moment lens: ₹3,300 (WhatsApp) or ₹3,500 (sheet)?
-2. #11/#12/#17 ATM lamps: one product at ₹225 (app)? or plain ₹160 + app ₹225?
-3. #22 SIPL Combo Kit: "50% pis" unclear (₹50 per piece? which car?)
-4. #81 Dosoon steering cover: price?
+1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
+2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
+3. SIPL Combo Kit: added 13 car-wise kits from IMS; 8 have no price ("Price on request"). "50% pis" still unclear.
+4. Dosoon steering cover: added 10 pcs ₹2,000 / 6 pcs ₹250 / 5 pcs ₹1,300 (IMS sales prices). Photo has CapCut mark (cropped).
 Also open: Bluzon catalogue matches (LED 155W model, Tire Inflator ₹1000 = TI-71/72?, 2/4-ch amp models,
 DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting for Jayant's final command.
 
