@@ -68,6 +68,9 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   To check with Jayant: unclear photo matches (155W = LT-07 photo, DVR 517 3-way/4G, MP3 = 2201, Tyre inflator = TI-71,
   CarPlay Android, 4-ch amp ₹600?), ATM lamp photos, Polar lens price (₹3,300 vs ₹3,500), combo kit prices.
 
+- 14 Nov: **LED headlights grouped by model** (Jayant): one card per model with size buttons on the product page
+  (H4 priced higher). 41 size items -> 6 cards. Home count now shows 274 (cards), 309 items incl. sizes.
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
