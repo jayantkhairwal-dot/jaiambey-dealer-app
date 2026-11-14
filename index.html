@@ -176,6 +176,9 @@ a{color:inherit;text-decoration:none}
 .link svg{width:16px;height:16px}
 
 .cats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grp{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--hot);margin:18px 2px 10px}
+#cats > .grp:first-child{margin-top:0}
+.cat h3{overflow-wrap:anywhere}
 .cat{
   position:relative;border-radius:var(--radius);overflow:hidden;background:var(--card);
   border:1px solid var(--line);padding:14px 14px 0;display:flex;flex-direction:column;min-height:196px;
@@ -300,6 +303,9 @@ a{color:inherit;text-decoration:none}
 .chip span{color:var(--muted);font-weight:600;margin-left:4px}
 .chip.on{background:#fff;color:#08070A;border-color:#fff}
 .chip.on span{color:#5A5257}
+.chip.brand:not(.on){border-color:var(--red);color:#fff}
+.brand-sec .sec-head h2{color:#fff}
+.brand-sec .sec-head h2::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--red);margin-right:10px;vertical-align:middle}
 .bar2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
 .bar2 .count{font-size:14px;color:var(--muted);font-weight:600}
 .sort{
@@ -535,14 +541,14 @@ a{color:inherit;text-decoration:none}
 
   <div class="below wrap">
     <div class="trust in d4">
-      <div><b data-count>106</b><span>products</span></div>
+      <div><b data-count>186</b><span>products</span></div>
       <div><b>20+</b><span>years</span></div>
       <div><b>Pan-India</b><span>dealers</span></div>
     </div>
 
     <a class="search" href="#search" aria-label="Search products">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <span>Search perfumes, brands…</span>
+      <span>Search perfumes, accessories, brands…</span>
     </a>
 
     <section class="sec">
@@ -551,13 +557,15 @@ a{color:inherit;text-decoration:none}
     </section>
 
     <section class="sec">
-      <div class="sec-head"><div><h2>Shop by category</h2><p>Car perfumes now, more coming soon</p></div></div>
-      <div class="cats" id="cats"></div>
+      <div class="sec-head"><div><h2>Shop by category</h2><p>Car perfumes and car accessories</p></div></div>
+      <div id="cats"></div>
       <div class="soon">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6A4D" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-        <span><b>Coming soon:</b> wheel caps, door guards, gear knobs, mobile stands, car care</span>
+        <span><b>Coming soon:</b> wheel caps, door guards, body covers, speakers and more</span>
       </div>
     </section>
+
+    <div id="brandSecs"></div>
 
     <section class="sec">
       <div class="sec-head">
@@ -583,7 +591,7 @@ a{color:inherit;text-decoration:none}
   <div class="ctrls" id="ctrls">
     <label class="sbox">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Search name or code, e.g. BO-13" autocomplete="off" enterkeyhint="search" aria-label="Search products">
+      <input id="q" type="search" placeholder="Search name, brand or code, e.g. Hella" autocomplete="off" enterkeyhint="search" aria-label="Search products">
       <button class="clear" id="qClear" type="button" aria-label="Clear search" hidden>×</button>
     </label>
     <div class="chips" id="chips" role="tablist" aria-label="Category"></div>
@@ -619,11 +627,11 @@ a{color:inherit;text-decoration:none}
   <p class="ab-lede">Car accessories wholesaler and distributor from Karol Bagh, New Delhi, for over 20 years.</p>
   <div class="facts">
     <div><b>20+</b><span>years</span></div>
-    <div><b data-count>106</b><span>products</span></div>
+    <div><b data-count>186</b><span>products</span></div>
     <div><b>Pan-India</b><span>dealers</span></div>
   </div>
   <div class="card ab-card">
-    <p>We supply dealers and retailers across India with car perfumes today, and soon wheel caps, door guards, gear knobs, mobile stands and car care.</p>
+    <p>We supply dealers and retailers across India with car perfumes and car accessories: horns, lights, fog lamps, LED headlights, car care, chargers, cameras and more. Bluzon products available.</p>
     <p class="muted">All prices in this app are fixed wholesale prices. The final bill, GST and transport are confirmed by our team after you send your order.</p>
   </div>
   <h2 class="h2">How to order</h2>
@@ -672,8 +680,20 @@ a{color:inherit;text-decoration:none}
   // Best-sellers by number of dealers ordering (Jul–Nov 2026), most first. Update by hand.
   const FAVOURITES = ["P038","P081","P056","P007","P064","P015","P014","P001","P107","P072"];
   // Category tile photo = that category's best-seller
-  const CAT_COVER  = { Dashboard:"P007", Hanging:"P038", Spray:"P056", Solar:"P014" };
-  const CAT_ORDER  = ["Dashboard","Hanging","Spray","Solar"];
+  // Categories in two groups. The cover photo (product id) is shown on the home tile.
+  const CAT_GROUPS = [
+    { title:"Car perfumes", cats:["Dashboard","Hanging","Spray","Solar"] },
+    { title:"Car accessories", cats:["Horns & Sirens","Lights","Fog Lamps & Projectors","LED Headlights","Car Care",
+      "Holders & Chargers","Android & Cameras","Audio & Wiring","Tyre Inflators & Vacuum","Interior & Accessories"] }
+  ];
+  const CAT_COVER  = { Dashboard:"P007", Hanging:"P038", Spray:"P056", Solar:"P014",
+    "Horns & Sirens":"A068", "Lights":"A055", "Fog Lamps & Projectors":"A071", "LED Headlights":"A059", "Car Care":"A064",
+    "Holders & Chargers":"A080", "Android & Cameras":"A075", "Audio & Wiring":"A026", "Tyre Inflators & Vacuum":"A005",
+    "Interior & Accessories":"A022" };
+  const CAT_ORDER  = CAT_GROUPS.flatMap(g => g.cats);
+  // Brand sections (own home rail + catalog chip). Products carry "brand" in products.json.
+  const BRANDS = ["Bluzon"];
+  const slug = c => String(c).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
   const QUICK_QTY  = [6, 12, 24, 48];
   // ============================================
 
@@ -808,10 +828,20 @@ a{color:inherit;text-decoration:none}
   // ---------- HOME ----------
   function renderHome(){
     document.querySelectorAll("[data-count]").forEach(el => el.textContent = P.length);
-    $("cats").innerHTML = CAT_ORDER.map(c => {
-      const n = P.filter(p => p.cat === c).length, cover = byId[CAT_COVER[c]];
-      return `<a class="cat" href="#catalog/${c.toLowerCase()}"><h3>${c}</h3><p>${n} items</p>
-        <div class="ph">${cover ? img(cover, 200) : ""}</div></a>`;
+    $("cats").innerHTML = CAT_GROUPS.map(g => {
+      const tiles = g.cats.map(c => {
+        const n = P.filter(p => p.cat === c).length, cover = byId[CAT_COVER[c]];
+        return n ? `<a class="cat" href="#catalog/${slug(c)}"><h3>${esc(c)}</h3><p>${n} items</p>
+          <div class="ph">${cover ? img(cover, 200) : ""}</div></a>` : "";
+      }).join("");
+      return tiles ? `<h3 class="grp">${g.title}</h3><div class="cats">${tiles}</div>` : "";
+    }).join("");
+    $("brandSecs").innerHTML = BRANDS.map(b => {
+      const list = P.filter(p => p.brand === b).sort((x,y) => rank(x) - rank(y));
+      return list.length ? `<section class="sec brand-sec"><div class="sec-head">
+        <div><h2>${esc(b)}</h2><p>${list.length} ${esc(b)} products at Jai Ambey</p></div>
+        <a class="link" href="#catalog/${slug(b)}">See all <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a></div>
+        <div class="rail">${list.slice(0, 12).map(card).join("")}</div></section>` : "";
     }).join("");
     $("rail").innerHTML = FAVOURITES.map(id => byId[id]).filter(Boolean)
       .sort((a,b) => rank(a) - rank(b)).map(card).join("");
@@ -843,20 +873,22 @@ a{color:inherit;text-decoration:none}
   // ---------- CATALOG ----------
   function renderChips(){
     const counts = {All:P.length};
+    BRANDS.forEach(b => counts[b] = P.filter(p=>p.brand===b).length);
     CAT_ORDER.forEach(c => counts[c] = P.filter(p=>p.cat===c).length);
-    $("chips").innerHTML = ["All",...CAT_ORDER].map(c =>
-      `<button type="button" class="chip${c===cat?" on":""}" data-cat="${c}" role="tab" aria-selected="${c===cat}">${c}<span>${counts[c]}</span></button>`).join("");
+    $("chips").innerHTML = ["All",...BRANDS,...CAT_ORDER].filter(c => counts[c]).map(c =>
+      `<button type="button" class="chip${c===cat?" on":""}${BRANDS.includes(c)?" brand":""}" data-cat="${esc(c)}" role="tab" aria-selected="${c===cat}">${esc(c)}<span>${counts[c]}</span></button>`).join("");
+    const on = $("chips").querySelector(".on"); if (on) on.scrollIntoView({block:"nearest", inline:"center"});
   }
   $("chips").addEventListener("click", e => {
     const b = e.target.closest("[data-cat]"); if (!b) return;
     cat = b.dataset.cat;
-    history.replaceState(null, "", cat === "All" ? "#catalog" : "#catalog/" + cat.toLowerCase());
+    history.replaceState(null, "", cat === "All" ? "#catalog" : "#catalog/" + slug(cat));
     renderChips(); renderGrid(); window.scrollTo(0, 0);
   });
   function filtered(){
     const words = q.split(/\s+/).map(norm).filter(Boolean);
-    let list = P.filter(p => (cat === "All" || p.cat === cat) &&
-      words.every(w => norm(p.name + " " + p.id + " " + p.cat).includes(w)));
+    let list = P.filter(p => (cat === "All" || p.cat === cat || p.brand === cat) &&
+      words.every(w => norm(p.name + " " + p.id + " " + p.cat + " " + (p.brand || "")).includes(w)));
     const base = (a,b) => P.indexOf(a) - P.indexOf(b);
     const by = {
       pop:  (a,b) => (favRank[a.id] ?? 999) - (favRank[b.id] ?? 999) || base(a,b),
@@ -909,7 +941,7 @@ a{color:inherit;text-decoration:none}
         : `<div class="pd-out"><b>On request</b>We don't keep this in regular stock, but we can arrange it for you. Ask us on WhatsApp with the quantity you need.</div>
         <a class="askbtn" style="margin-top:14px;min-height:54px;font-size:17px" href="${askLink(p)}" target="_blank" rel="noopener">${ICON.wa}Ask for it on WhatsApp</a>`}
       ${more.length ? `<section class="sec"><div class="sec-head"><div><h2>More ${esc(p.cat)}</h2></div>
-        <a class="link" href="#catalog/${p.cat.toLowerCase()}">See all</a></div>
+        <a class="link" href="#catalog/${slug(p.cat)}">See all</a></div>
         <div class="rail">${more.map(card).join("")}</div></section>` : ""}
       <div class="spacer"></div>` : `
       <div class="lbl">Quantity</div>
@@ -920,7 +952,7 @@ a{color:inherit;text-decoration:none}
       <button type="button" class="pill pill-white" id="pdAdd"></button>
       <div class="incart" id="pdIn"></div>
       ${more.length ? `<section class="sec"><div class="sec-head"><div><h2>More ${esc(p.cat)}</h2></div>
-        <a class="link" href="#catalog/${p.cat.toLowerCase()}">See all</a></div>
+        <a class="link" href="#catalog/${slug(p.cat)}">See all</a></div>
         <div class="rail">${more.map(card).join("")}</div></section>` : ""}
       <div class="spacer"></div>`}`;
     $("pdBack").onclick = () => history.length > 1 ? history.back() : (location.hash = "#catalog");
@@ -1335,7 +1367,8 @@ a{color:inherit;text-decoration:none}
     if (view === "home") renderHome();
     if (view === "catalog"){
       if (name === "catalog"){
-        const c = CAT_ORDER.find(x => x.toLowerCase() === (arg || "").toLowerCase()) || "All";
+        const a = decodeURIComponent(arg || "");
+        const c = [...BRANDS, ...CAT_ORDER].find(x => slug(x) === slug(a)) || "All";
         if (arg !== undefined || prev !== "product") cat = c;
       }
       renderChips(); renderGrid();

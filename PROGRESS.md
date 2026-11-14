@@ -45,6 +45,15 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   My orders → Pay / Upload screenshot stays for extra payments (Payments tab).
   Switch on by filling `PAY_UPI_ID` and `PAY_UPLOAD_URL` in `index.html`.
 
+- 14 Nov: **80 car accessories added** (78 photos from Drive "MDO Image"; Clean Cham and Bluzon ambient light in 2 sizes).
+  Ids A001–A080, photos img/aNNN.jpg (NNN = Drive photo number). Prices: usual sales price or Jayant's answers.
+  New categories (two groups on home: Car perfumes / Car accessories): Horns & Sirens, Lights, Fog Lamps & Projectors,
+  LED Headlights, Car Care, Holders & Chargers, Android & Cameras, Audio & Wiring, Tyre Inflators & Vacuum, Interior & Accessories.
+  **Bluzon section**: home rail + "Bluzon" catalog chip (products with brand "Bluzon", incl. Bluzon Kode perfume).
+  Stock from IMS (6 Nov): 3 sold out (Fusion RCA cable, MA260 tweeter, Bluzon 324W); 5 not in IMS = On request
+  (Fusion Android, Cardi tail light, Sports mat, Windek 5405, IPH M6T). Now 186 products.
+  Remaining items for later: Drive folder "MDO Image - Remaining (for later)".
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: ₹3,300 (WhatsApp) or ₹3,500 (sheet)?
 2. #11/#12/#17 ATM lamps: one product at ₹225 (app)? or plain ₹160 + app ₹225?
