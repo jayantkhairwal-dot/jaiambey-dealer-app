@@ -45,6 +45,14 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   My orders → Pay / Upload screenshot stays for extra payments (Payments tab).
   Switch on by filling `PAY_UPI_ID` and `PAY_UPLOAD_URL` in `index.html`.
 
+## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
+1. #20 IPH Polar moment lens: ₹3,300 (WhatsApp) or ₹3,500 (sheet)?
+2. #11/#12/#17 ATM lamps: one product at ₹225 (app)? or plain ₹160 + app ₹225?
+3. #22 SIPL Combo Kit: "50% pis" unclear (₹50 per piece? which car?)
+4. #81 Dosoon steering cover: price?
+Also open: Bluzon catalogue matches (LED 155W model, Tire Inflator ₹1000 = TI-71/72?, 2/4-ch amp models,
+DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting for Jayant's final command.
+
 ## Waiting on Jayant (start here next session)
 1. **Payments switch-on:** send the business UPI ID (bank current account / PhonePe / Paytm / GPay for Business),
    and do `apps-script/SETUP.md` (Jayant or MIS, ~15 min) and send the web app URL ending in `/exec`.
