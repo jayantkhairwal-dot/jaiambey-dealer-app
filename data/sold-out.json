@@ -30,9 +30,7 @@
   {"id": "P109", "name": "Black Odor BO-41"},
   {"id": "A001", "name": "Fusion RCA Signal Cable"},
   {"id": "A046", "name": "MA260 1\" Dome Tweeter"},
-  {"id": "A056", "name": "Bluzon LED Headlight Bolt-17 324W"},
   {"id": "A082", "name": "Bluzon LED Headlight Eagle 244W H1"},
-  {"id": "A093", "name": "Bluzon LED Headlight Aeroplane 324W H7"},
   {"id": "A097", "name": "Bluzon LED Headlight Tri-Colour 240W H7"},
   {"id": "A113", "name": "Bluzon Projector 3\" Three Eye Tri Colour"},
   {"id": "A118", "name": "Bluzon 360° Camera Kit CC360PX"},
@@ -42,12 +40,6 @@
   {"id": "A133", "name": "Bluzon Central Locking 4-Door CN-1554"},
   {"id": "A149", "name": "Bluzon LED Headlight 155W H1"},
   {"id": "A154", "name": "Bluzon LED Headlight 155W 9012"},
-  {"id": "A155", "name": "Bluzon LED Headlight 155W H27"},
-  {"id": "A156", "name": "Bluzon LED Headlight Eagle 244W H27"},
-  {"id": "A157", "name": "Bluzon LED Headlight Bull 340W H27"},
-  {"id": "A158", "name": "Bluzon LED Headlight Aeroplane 324W 9005"},
-  {"id": "A159", "name": "Bluzon LED Headlight Aeroplane 324W 9012"},
-  {"id": "A160", "name": "Bluzon LED Headlight Aeroplane 324W H27"},
   {"id": "A162", "name": "Bluzon Projector 3\" Three Eye Single Colour"},
   {"id": "A163", "name": "Bluzon Square Projector 2\""},
   {"id": "A167", "name": "Bluzon AHD Fish Eye Camera CC-20"},
@@ -58,6 +50,5 @@
   {"id": "A184", "name": "Bluzon Central Locking 1-Door"},
   {"id": "A188", "name": "SIPL Combo Kit – Alto 800"},
   {"id": "A189", "name": "SIPL Combo Kit – Alto K10"},
-  {"id": "A191", "name": "SIPL Combo Kit – Dzire"},
-  {"id": "A202", "name": "Dosoon Steering Cover (6 pcs box)"}
+  {"id": "A191", "name": "SIPL Combo Kit – Dzire"}
 ]

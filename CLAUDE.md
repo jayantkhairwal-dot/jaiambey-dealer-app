@@ -9,7 +9,7 @@ Dealers across India open one link, browse the catalog, add items with quantitie
 - Jai Ambey's team receives the orders.
 
 ## Current content
-- `data/products.json`: 309 products: 106 car perfumes + 203 car accessories (id, name, cat, price in INR or null, unit, img, brand). price null = "Price on request" (Ask button).
+- `data/products.json`: 296 products: 104 car perfumes + 192 car accessories (id, name, cat, price in INR or null, unit, img, brand). price null = "Price on request" (Ask button).
   Size variants: products with the same `grp` (e.g. LED headlights, `v` = "H4") show as ONE card ("from ₹…", "Choose size");
   the type is picked from a "Type" dropdown on the card (price changes with it) or on the product page.
   Each type keeps its own id, price and sold-out state.

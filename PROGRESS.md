@@ -75,6 +75,11 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   headlights, SIPL combo kit (13 cars), Dosoon steering cover, Clean Cham, ambient light, amp kits, bass tube,
   projectors single/tri, M617, loud speaker, central locking. Price (and photo) follow the choice. 247 cards.
 
+- 15 Nov: removed Aeroplane 324W series (discontinued), Fighter Jet Solar x2 (not sold), Bluzon double woofer,
+  4300K 9006 and all H27 headlights. Dosoon steering cover 6 pcs now 2 types: DODO ₹1,600 and black box ₹2,100
+  (old cheap box gone). Combo kit prices differ per car and nobody can confirm: left as is.
+  IMS clean-up list for MIS sent (IMS-cleanup-for-MIS.xlsx: negative stock, closing vs date mismatch, zero stock, not in IMS).
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
