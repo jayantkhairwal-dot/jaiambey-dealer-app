@@ -81,6 +81,12 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   IMS clean-up list for MIS sent (IMS-cleanup-for-MIS.xlsx: negative stock, closing vs date mismatch, zero stock, not in IMS).
 
 - 15 Nov: removed Snowy Hanging, Solar Tanks, Black Odor BO-11 (Jayant). 240 cards / 293 items.
+- 15 Nov: answers from Abhishek/team applied. Polar Moment lens = the 2" square projector: one product
+  "IPH Square Projector 2\" (Polar Moment)" ₹3,300 (old photo-less Bluzon Square projector card removed).
+  Atmosphere Light (Remote) ₹160, Atmosphere Light (App) ₹325 (photo #17 is the same App lamp).
+  4-ch amp ₹4,000 (still sold out), Tyre inflator ₹1,100, Fish eye camera ₹600, LED rear camera ₹250,
+  Fog light ₹1,300, Projector 3" Three Eye single ₹4,500, Steering cover now "14 pcs pack" ₹2,800.
+  Guessed photos all confirmed. Removed Android T5 with DVR and 2" Grill projector single colour. 238 cards / 290 items.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
