@@ -87,6 +87,7 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   4-ch amp ₹4,000 (still sold out), Tyre inflator ₹1,100, Fish eye camera ₹600, LED rear camera ₹250,
   Fog light ₹1,300, Projector 3" Three Eye single ₹4,500, Steering cover now "14 pcs pack" ₹2,800.
   Guessed photos all confirmed. Removed Android T5 with DVR and 2" Grill projector single colour. 238 cards / 290 items.
+- 15 Nov: removed all 13 SIPL combo kits (Jayant). 237 cards / 277 items.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
