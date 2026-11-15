@@ -80,6 +80,8 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   (old cheap box gone). Combo kit prices differ per car and nobody can confirm: left as is.
   IMS clean-up list for MIS sent (IMS-cleanup-for-MIS.xlsx: negative stock, closing vs date mismatch, zero stock, not in IMS).
 
+- 15 Nov: removed Snowy Hanging, Solar Tanks, Black Odor BO-11 (Jayant). 240 cards / 293 items.
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
