@@ -2,7 +2,7 @@
 
 Last updated: 13 Nov 2026
 Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambey-dealer-app/
-(add `?demo=1` to see a sample order and the payment screens in preview: Cart → pay + screenshot → order placed; nothing is sent)
+(add `?demo=1` to see a sample past order in My orders)
 
 ## Done
 - Home screen (`index.html`): Jai Ambey logo, red planet-horizon glow, headline
@@ -88,6 +88,9 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   Fog light ₹1,300, Projector 3" Three Eye single ₹4,500, Steering cover now "14 pcs pack" ₹2,800.
   Guessed photos all confirmed. Removed Android T5 with DVR and 2" Grill projector single colour. 238 cards / 290 items.
 - 15 Nov: removed all 13 SIPL combo kits (Jayant). 237 cards / 277 items.
+- 18 Nov: **payments removed** (Jayant: no payment method; orders by WhatsApp only, WATI later).
+  Cart → "Send order on WhatsApp" → WhatsApp opens with the order typed in. UPI/QR/screenshot screens, the #pay page
+  and apps-script/ (payments sheet script) deleted (still in git history). ORDER_WHATSAPP is blank until Jayant sends the number.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
@@ -98,9 +101,7 @@ Also open: Bluzon catalogue matches (LED 155W model, Tire Inflator ₹1000 = TI-
 DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting for Jayant's final command.
 
 ## Waiting on Jayant (start here next session)
-1. **Payments switch-on:** send the business UPI ID (bank current account / PhonePe / Paytm / GPay for Business),
-   and do `apps-script/SETUP.md` (Jayant or MIS, ~15 min) and send the web app URL ending in `/exec`.
-   Then: fill `PAY_UPI_ID` + `PAY_UPLOAD_URL`, test one real ₹1 order end to end, check the Orders tab and screenshot.
+1. **WhatsApp number for orders** (until WATI): put it in `ORDER_WHATSAPP` in `index.html`.
 2. **IMS clean-up (MIS):** "Closing Stock" column is out of line from row "Can (Vedashri)" down; many best-sellers show
    negative stock (missing "In" entries). Until fixed, re-check the 29 sold-out products, especially favourites
    Godrej Aer Hanging, Veda Shree Bori, Involve Spray, BO-13, BO-23. 7 products can't be read (BO-40, Areon Sport Lux,
@@ -113,7 +114,7 @@ DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting fo
    and Apps Script project "jai ambey order tracking".
 
 ## Next
-1. Switch on payments (item 1 above) and test with a real ₹1 order.
+1. Put the order WhatsApp number in; later connect WATI.
 2. Jayant tests the full app on his phone (`?demo=1` for the payment preview) and sends changes.
 3. Before sharing with dealers: merge to `main`, switch GitHub Pages to `main`.
 4. Later (from CLAUDE.md): live In stock / Out of stock from the IMS (after clean-up), WATI confirmations,
