@@ -91,6 +91,13 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 - 18 Nov: **payments removed** (Jayant: no payment method; orders by WhatsApp only, WATI later).
   Cart → "Send order on WhatsApp" → WhatsApp opens with the order typed in. UPI/QR/screenshot screens, the #pay page
   and apps-script/ (payments sheet script) deleted (still in git history). ORDER_WHATSAPP is blank until Jayant sends the number.
+- 18 Nov: **Product Catalogue sheet (Drive, made by Jayant's team)** applied, photos img/pc-*.jpg:
+  new box photos for Bluzon headlights Bull 340W, Eagle 244W, 4300K 240W, Tri-Colour 240W, 155W and LED camera,
+  Fish eye camera; Bluzon AHD + CVBS Camera CC-17 now ₹600. Added (A205–A215): Pluzon LED Headlight 300W
+  (H4 ₹3,200, H7/9005/9012 ₹3,000, H8 ₹2,800 sold out; IMS sales prices, H1 not added: 0 stock, no price),
+  Conexion car camera ₹250, Pluzon AHD night vision camera PO-CC14 ₹600 (box photo edited: Bluzon logo → Pluzon, per Jayant),
+  Pluzon AHD + CVBS camera CC-20 ₹600, Osram twin tone horn ₹450, Hella S90 single horn ₹200, Basuri snail horn ₹550.
+  Pluzon/PZ = separate brand. Projectors tab (M6280 App, PJ02X, M513, Bluzon 3" 200W) left for later. 244 cards / 288 items.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
