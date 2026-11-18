@@ -313,6 +313,14 @@ a{color:inherit;text-decoration:none}
 .chip.on{background:#fff;color:#08070A;border-color:#fff}
 .chip.on span{color:#5A5257}
 .chip.brand:not(.on){border-color:var(--red);color:#fff}
+.subchips{margin-top:8px}
+.subchips .chip{min-height:40px;font-size:14px;padding:0 14px;background:transparent}
+.subchips .chip.on{background:var(--red);border-color:var(--red);color:#fff}
+.subchips .chip.on span{color:rgba(255,255,255,.8)}
+.cat.parent{grid-column:1/-1}
+.cat.parent .ph{grid-template-columns:repeat(4,1fr);gap:0}
+.cat.parent .ph img{aspect-ratio:.8;padding:6px}
+.cat .subs{font-size:12.5px;font-weight:700;color:var(--hot);margin-top:2px}
 .brand-sec .sec-head h2{color:#fff}
 .brand-sec .sec-head h2::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--red);margin-right:10px;vertical-align:middle}
 .bar2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
@@ -588,6 +596,7 @@ a{color:inherit;text-decoration:none}
       <button class="clear" id="qClear" type="button" aria-label="Clear search" hidden>×</button>
     </label>
     <div class="chips" id="chips" role="tablist" aria-label="Category"></div>
+    <div class="chips subchips" id="subchips" role="tablist" aria-label="Type" hidden></div>
     <div class="bar2">
       <span class="count" id="count"></span>
       <select class="sort" id="sort" aria-label="Sort">
@@ -674,6 +683,11 @@ a{color:inherit;text-decoration:none}
     "Holders & Chargers":"A080", "Android & Cameras":"A075", "Audio & Wiring":"A026", "Tyre Inflators & Vacuum":"A005",
     "Interior & Accessories":"A022" };
   const CAT_ORDER  = CAT_GROUPS.flatMap(g => g.cats);
+  // Parent categories: one tile/chip on top, with their own sub-category chips (types) underneath.
+  const PARENTS = { "Car Perfumes": CAT_GROUPS[0].cats };
+  const parentOf = c => Object.keys(PARENTS).find(k => PARENTS[k].includes(c));
+  const TOP_CATS = [...Object.keys(PARENTS), ...CAT_ORDER.filter(c => !parentOf(c))];
+  const inCat = (p, c) => c === "All" || p.cat === c || p.brand === c || (PARENTS[c] || []).includes(p.cat);
   // Brand sections (own home rail + catalog chip). Products carry "brand" in products.json.
   const BRANDS = ["Bluzon"];
   const slug = c => String(c).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -846,14 +860,14 @@ a{color:inherit;text-decoration:none}
   // ---------- HOME ----------
   function renderHome(){
     document.querySelectorAll("[data-count]").forEach(el => el.textContent = reps(P).length);
-    $("cats").innerHTML = CAT_GROUPS.map(g => {
-      const tiles = g.cats.map(c => {
-        const n = reps(P.filter(p => p.cat === c)).length, cover = byId[CAT_COVER[c]];
-        return n ? `<a class="cat" href="#catalog/${slug(c)}"><h3>${esc(c)}</h3><p>${n} items</p>
-          <div class="ph">${cover ? img(cover, 200) : ""}</div></a>` : "";
-      }).join("");
-      return tiles ? `<h3 class="grp">${g.title}</h3><div class="cats">${tiles}</div>` : "";
-    }).join("");
+    $("cats").innerHTML = `<div class="cats">${TOP_CATS.map(c => {
+      const n = reps(P.filter(p => inCat(p, c))).length, cover = byId[CAT_COVER[c]];
+      // Parent tile shows one photo per type
+      const ph = PARENTS[c] ? PARENTS[c].map(t => byId[CAT_COVER[t]]).filter(Boolean).map(x => img(x, 120)).join("") : (cover ? img(cover, 200) : "");
+      const sub = PARENTS[c] ? `<p class="subs">${PARENTS[c].join(" · ")}</p>` : "";
+      return n ? `<a class="cat${PARENTS[c] ? " parent" : ""}" href="#catalog/${slug(c)}"><h3>${esc(c)}</h3><p>${n} items</p>${sub}
+        <div class="ph">${ph}</div></a>` : "";
+    }).join("")}</div>`;
     $("brandSecs").innerHTML = BRANDS.map(b => {
       const list = reps(P.filter(p => p.brand === b)).sort((x,y) => rank(x) - rank(y));
       return list.length ? `<section class="sec brand-sec"><div class="sec-head">
@@ -892,20 +906,27 @@ a{color:inherit;text-decoration:none}
   function renderChips(){
     const counts = {All:reps(P).length};
     BRANDS.forEach(b => counts[b] = reps(P.filter(p=>p.brand===b)).length);
-    CAT_ORDER.forEach(c => counts[c] = reps(P.filter(p=>p.cat===c)).length);
-    $("chips").innerHTML = ["All",...BRANDS,...CAT_ORDER].filter(c => counts[c]).map(c =>
-      `<button type="button" class="chip${c===cat?" on":""}${BRANDS.includes(c)?" brand":""}" data-cat="${esc(c)}" role="tab" aria-selected="${c===cat}">${esc(c)}<span>${counts[c]}</span></button>`).join("");
-    const on = $("chips").querySelector(".on"); if (on) on.scrollIntoView({block:"nearest", inline:"center"});
+    [...TOP_CATS, ...CAT_ORDER].forEach(c => counts[c] = reps(P.filter(p => inCat(p, c))).length);
+    const top = PARENTS[cat] ? cat : (parentOf(cat) || cat);
+    const chip = (c, on, label) => `<button type="button" class="chip${on?" on":""}${BRANDS.includes(c)?" brand":""}" data-cat="${esc(c)}" role="tab" aria-selected="${on}">${esc(label || c)}<span>${counts[c]}</span></button>`;
+    $("chips").innerHTML = ["All",...BRANDS,...TOP_CATS].filter(c => counts[c]).map(c => chip(c, c === top)).join("");
+    // Types of the chosen parent category (e.g. Car Perfumes → Dashboard, Hanging, Spray, Solar)
+    const subs = $("subchips");
+    subs.hidden = !PARENTS[top];
+    subs.innerHTML = PARENTS[top] ? chip(top, cat === top, "All types") + PARENTS[top].filter(c => counts[c]).map(c => chip(c, c === cat)).join("") : "";
+    [$("chips"), subs].forEach(row => { const on = row.querySelector(".on"); if (on) on.scrollIntoView({block:"nearest", inline:"center"}); });
   }
-  $("chips").addEventListener("click", e => {
+  $("subchips").addEventListener("click", e => $("chips").onclickCat(e));
+  $("chips").onclickCat = e => {
     const b = e.target.closest("[data-cat]"); if (!b) return;
     cat = b.dataset.cat;
     history.replaceState(null, "", cat === "All" ? "#catalog" : "#catalog/" + slug(cat));
     renderChips(); renderGrid(); window.scrollTo(0, 0);
-  });
+  };
+  $("chips").addEventListener("click", e => $("chips").onclickCat(e));
   function filtered(){
     const words = q.split(/\s+/).map(norm).filter(Boolean);
-    let list = P.filter(p => (cat === "All" || p.cat === cat || p.brand === cat) &&
+    let list = P.filter(p => inCat(p, cat) &&
       words.every(w => norm(p.name + " " + p.id + " " + p.cat + " " + (p.brand || "")).includes(w)));
     const base = (a,b) => P.indexOf(a) - P.indexOf(b);
     const by = {
@@ -1187,7 +1208,7 @@ a{color:inherit;text-decoration:none}
     if (view === "catalog"){
       if (name === "catalog"){
         const a = decodeURIComponent(arg || "");
-        const c = [...BRANDS, ...CAT_ORDER].find(x => slug(x) === slug(a)) || "All";
+        const c = [...BRANDS, ...TOP_CATS, ...CAT_ORDER].find(x => slug(x) === slug(a)) || "All";
         if (arg !== undefined || prev !== "product") cat = c;
       }
       renderChips(); renderGrid();

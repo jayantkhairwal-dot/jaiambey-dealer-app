@@ -13,7 +13,7 @@ Dealers across India open one link, browse the catalog, add items with quantitie
   Size variants: products with the same `grp` (e.g. LED headlights, `v` = "H4") show as ONE card ("from ₹…", "Choose size");
   the type is picked from a "Type" dropdown on the card (price changes with it) or on the product page.
   Each type keeps its own id, price and sold-out state.
-  Perfume categories: Dashboard, Hanging, Spray, Solar. Accessory categories: see CAT_GROUPS in index.html.
+  Perfume categories: one parent "Car Perfumes" (PARENTS in index.html) with types Dashboard, Hanging, Spray, Solar. Accessory categories: see CAT_GROUPS in index.html.
   `brand` ("Bluzon") gives the product a home section and a catalog chip (BRANDS in index.html). Accessory ids start with A.
   Categories: Dashboard, Hanging, Spray, Solar. `unit` is "per pc" / "per box" or empty.
 - `data/sold-out.json`: ids of products shown as "Sold out" (can't be ordered). Remove an id to make it available again.
