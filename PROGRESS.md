@@ -101,6 +101,9 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 - 18 Nov: **one "Car Perfumes" category** (Jayant): home shows one wide Car Perfumes tile (photos of the 4 types)
   + the accessory tiles. Catalog: "Car Perfumes" chip; when chosen, a second row of type chips
   (All types, Dashboard, Hanging, Spray, Solar). Old links like #catalog/hanging still work. PARENTS in index.html.
+- 18 Nov: **Projectors tab** of the Product Catalogue sheet applied: M617 single ₹2,800 / tri ₹3,200, IPH Square 2" ₹3,400
+  (LED tab still says 3,300; projector tab used), new box photos for these + Bluzon 3" Two Eye single (PJ02X) and 3" Plain tri.
+  Added A216 IPH M6280 App tri colour ₹3,500, A217 IPH M513 single colour ₹3,300. 246 cards / 290 items.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
