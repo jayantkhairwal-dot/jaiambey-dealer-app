@@ -104,6 +104,12 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 - 18 Nov: **Projectors tab** of the Product Catalogue sheet applied: M617 single ₹2,800 / tri ₹3,200, IPH Square 2" ₹3,400
   (LED tab still says 3,300; projector tab used), new box photos for these + Bluzon 3" Two Eye single (PJ02X) and 3" Plain tri.
   Added A216 IPH M6280 App tri colour ₹3,500, A217 IPH M513 single colour ₹3,300. 246 cards / 290 items.
+- 21 Nov (Jayant): removed Godrej Aer Dashboard ₹220 (Godrej Dashboard ₹230 stays), Areon Golden, Mitoq Hanging + Jar,
+  Keizo Dashboard ₹350, Xiang Meng. Prices: Keizo Can ₹250, Veda Shree Jute ₹250, Bluzon Android TS ₹4,800,
+  Car Safety Flash Kit ₹300, Bluzon ambient light 6 pc ₹2,100 / 10 pc ₹2,300, IPH Polar Fog M512S ₹3,800,
+  Multifunctional Car Holder (Portronics dropped from name) ₹260, Bluzon 10" dual sub ₹9,500, Bluzon 8GA kit blue ₹650 (red ₹500),
+  IPH Square 2" ₹3,300, IPH M6T ₹2,700. Waiting: Mint Air dashboard prices; which product is "Polar Fog tri colour ₹3,100".
+  240 cards / 284 items.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
