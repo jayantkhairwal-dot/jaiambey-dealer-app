@@ -138,6 +138,9 @@ DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting fo
 Prices Jayant gives in chat beat the Product Catalogue sheet when they differ.
 
 ## Waiting on Jayant (start here next session)
+00. **Excel copy of the Product Catalogue sheet** (21 Nov watch ended 7 pm): 8 new products need its photos:
+   Bluzon Projector 2" Single ₹3,300 / Tri ₹3,600, 3 Lens LED ₹500, 4 Lens LED ₹600, Hindcart 8G Amp Kit ₹550,
+   Duratone VIP Siren ₹400, Iota Electronic Siren ₹875, Duratone Dual Siren ₹850. Formula 1 Headlight Restorer price still blank.
 0. **Later task (Jayant):** new prices for the 4 Mint Air dashboards (P078 ₹130, P079 Rally Drift ₹150, P080 ₹90, P100 Rainbow ₹80).
 1. **WhatsApp number for orders** (until WATI): put it in `ORDER_WHATSAPP` in `index.html`.
 2. **IMS clean-up (MIS):** "Closing Stock" column is out of line from row "Can (Vedashri)" down; many best-sellers show
