@@ -124,6 +124,8 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 
 - 21 Nov 5:19 pm check: 5 new rows in the sheet, waiting for photos (Excel from Jayant): Bluzon Projector 2" Single ₹3,300 / Tri ₹3,600 (not the 2" Two Eye A107/A108), 3 Lens LED ₹500, 4 Lens LED ₹600, Hindcart 8G Amp Kit ₹550.
 
+- 21 Nov 6:20 pm check: new tabs Sirens (Duratone VIP ₹400, Iota Electronic ₹875, Duratone Dual ₹850: need photos) and Dash Cams (515 ₹1,500, 513 = 2-Way 512-13 ₹2,100, 3-Way ₹2,700: already match).
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
