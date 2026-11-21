@@ -120,6 +120,8 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   Kept chat prices where the sheet differs: Square 2" ₹3,300 (sheet 3,400), M617 tri ₹3,100 (sheet 3,200),
   DODO 6 pcs ₹1,600 (sheet 1,500), Flash kit ₹300 (sheet "Grill Flasher" 350). 262 cards / 312 items.
 
+- 21 Nov 4:18 pm check: Polish & Wax tab got names (matched the photo guesses). Renamed A237 "Formula 1 Carnauba Car Wax (Big)", A240 "Cream Max Wax 220g" (sheet: "Cream Max (3M)"; box shows no 3M). Headlight Restorer still no price.
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
