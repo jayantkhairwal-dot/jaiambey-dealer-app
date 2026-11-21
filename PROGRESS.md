@@ -122,6 +122,8 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 
 - 21 Nov 4:18 pm check: Polish & Wax tab got names (matched the photo guesses). Renamed A237 "Formula 1 Carnauba Car Wax (Big)", A240 "Cream Max Wax 220g" (sheet: "Cream Max (3M)"; box shows no 3M). Headlight Restorer still no price.
 
+- 21 Nov 5:19 pm check: 5 new rows in the sheet, waiting for photos (Excel from Jayant): Bluzon Projector 2" Single ₹3,300 / Tri ₹3,600 (not the 2" Two Eye A107/A108), 3 Lens LED ₹500, 4 Lens LED ₹600, Hindcart 8G Amp Kit ₹550.
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
