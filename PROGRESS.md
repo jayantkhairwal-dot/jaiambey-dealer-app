@@ -110,6 +110,15 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   Multifunctional Car Holder (Portronics dropped from name) ₹260, Bluzon 10" dual sub ₹9,500, Bluzon 8GA kit blue ₹650 (red ₹500),
   IPH Square 2" ₹3,300, IPH M6T ₹2,700. Then: M617 Tri Colour ₹3,100 (the "Polar Fog tri colour"), P064 renamed Godrej Aer Dashboard.
   240 cards / 284 items.
+- 21 Nov: **full Product Catalogue sheet (10 tabs, Excel uploaded by Jayant)** applied. Sheet photos (img/pc-*.jpg) now on 26 more
+  products (horns, chargers, flashers, underbody, 3M/Air Gloss, Fusion wires, D-SON kit, Dosoon covers, Fusion Gold camera).
+  Bluzon steering cover (A183) = Double Colour single cover ₹375. S16/S24 strobe = one card (Type).
+  Added A218–A245: 4 Portronics cables (billing prices 100/250/150/100, sheet had none), Car Doc door guard (3 colours ₹150),
+  Checkmate edge door guard (Black ₹190 / Blue ₹230), Dosoon steering cover ₹400, 3D shadow light (Suzuki/Hycross/Toyota ₹250),
+  9 polish & wax (Dragon Shield, DCD, Formula 1, Motomax, Cream Wax; F1 headlight restorer has no price),
+  Gipsa RCA ₹150, Gipsa Y lead ₹350, Debonair speaker wire ₹450, Bluzon 4GA kit ₹1,050, Yuvix fog lamp wiring ₹410.
+  Kept chat prices where the sheet differs: Square 2" ₹3,300 (sheet 3,400), M617 tri ₹3,100 (sheet 3,200),
+  DODO 6 pcs ₹1,600 (sheet 1,500), Flash kit ₹300 (sheet "Grill Flasher" 350). 262 cards / 312 items.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
