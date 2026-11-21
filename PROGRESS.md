@@ -108,7 +108,7 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   Keizo Dashboard ₹350, Xiang Meng. Prices: Keizo Can ₹250, Veda Shree Jute ₹250, Bluzon Android TS ₹4,800,
   Car Safety Flash Kit ₹300, Bluzon ambient light 6 pc ₹2,100 / 10 pc ₹2,300, IPH Polar Fog M512S ₹3,800,
   Multifunctional Car Holder (Portronics dropped from name) ₹260, Bluzon 10" dual sub ₹9,500, Bluzon 8GA kit blue ₹650 (red ₹500),
-  IPH Square 2" ₹3,300, IPH M6T ₹2,700. Waiting: Mint Air dashboard prices; which product is "Polar Fog tri colour ₹3,100".
+  IPH Square 2" ₹3,300, IPH M6T ₹2,700. Then: M617 Tri Colour ₹3,100 (the "Polar Fog tri colour"), P064 renamed Godrej Aer Dashboard.
   240 cards / 284 items.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
@@ -120,6 +120,7 @@ Also open: Bluzon catalogue matches (LED 155W model, Tire Inflator ₹1000 = TI-
 DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting for Jayant's final command.
 
 ## Waiting on Jayant (start here next session)
+0. **Later task (Jayant):** new prices for the 4 Mint Air dashboards (P078 ₹130, P079 Rally Drift ₹150, P080 ₹90, P100 Rainbow ₹80).
 1. **WhatsApp number for orders** (until WATI): put it in `ORDER_WHATSAPP` in `index.html`.
 2. **IMS clean-up (MIS):** "Closing Stock" column is out of line from row "Can (Vedashri)" down; many best-sellers show
    negative stock (missing "In" entries). Until fixed, re-check the 29 sold-out products, especially favourites
