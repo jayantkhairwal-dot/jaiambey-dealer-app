@@ -128,6 +128,9 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 Also open: Bluzon catalogue matches (LED 155W model, Tire Inflator ₹1000 = TI-71/72?, 2/4-ch amp models,
 DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting for Jayant's final command.
 
+## Rule (Jayant, 21 Nov)
+Prices Jayant gives in chat beat the Product Catalogue sheet when they differ.
+
 ## Waiting on Jayant (start here next session)
 0. **Later task (Jayant):** new prices for the 4 Mint Air dashboards (P078 ₹130, P079 Rally Drift ₹150, P080 ₹90, P100 Rainbow ₹80).
 1. **WhatsApp number for orders** (until WATI): put it in `ORDER_WHATSAPP` in `index.html`.
