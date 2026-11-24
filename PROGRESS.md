@@ -147,7 +147,7 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 
 - 24 Nov: **automatic stock update without any setup** (Jayant: "do it on my behalf"): tools/update_stock.py reads an Excel copy
   of the IMS (same MAP + rule as live-stock.gs) and rewrites data/sold-out.json. A scheduled task (Claude, fresh session) runs it
-  4 times a day (10:47, 13:47, 16:47, 18:47 IST): downloads the IMS read-only via the Drive connector, runs the script, deletes the copy,
+  once a day at 8:51 am IST (Jayant: daily 9 am): downloads the IMS read-only via the Drive connector, runs the script, deletes the copy,
   commits + pushes only if something changed. The Apps Script live version stays ready if Jayant ever wants real-time.
 
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
