@@ -32,7 +32,7 @@ Dealers across India open one link, browse the catalog, add items with quantitie
 
 ## Coming later (design for it, don't build yet)
 - Orders go to a backend (Google Apps Script) that saves them to Google Sheets and triggers the Sales FMS
-- Live stock from the "JAI AMBEY - IMS" Google Sheet: show In stock / Out of stock only, never quantities
+- Live stock from the "JAI AMBEY - IMS" Google Sheet: built (apps-script/live-stock.gs, STOCK_URL in index.html); switch on after setup. In stock / Out of stock only, never quantities
 - WhatsApp order confirmations through WATI on a new company number
 - "New arrivals" section
 

@@ -138,6 +138,13 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 - 24 Nov (team via Jayant): Formula 1 Headlight Restorer ₹450, Bluzon 155W H1 and 9012 ₹1,400, Bluzon 2" Grill Projector Tri ₹3,800.
   Team also said "90" (Mint Air?) - asked Jayant to confirm.
 
+- 24 Nov: **live stock from the IMS** built (Jayant asked). apps-script/live-stock.gs (read-only, standalone, IMS id in Script
+  properties, not in the repo) answers {known, out} per app id; rule 0 = sold out, minus = available. MAP = app id -> IMS item name
+  (285 products). App: STOCK_URL in index.html (blank until Jayant deploys, see apps-script/SETUP-live-stock.md); checked after the
+  catalog shows, overrides data/sold-out.json for known ids, removes newly sold-out items from the cart. Tested with the real IMS
+  (same result as the manual list) and in the browser with a mock answer.
+  When adding products: add their IMS name to MAP and redeploy (new version).
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
@@ -150,6 +157,7 @@ DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting fo
 Prices Jayant gives in chat beat the Product Catalogue sheet when they differ.
 
 ## Waiting on Jayant (start here next session)
+000. **Live stock:** do apps-script/SETUP-live-stock.md (~10 min) and send the /exec URL -> put in STOCK_URL, test.
 0. **Later task (Jayant):** new prices for the 4 Mint Air dashboards (P078 ₹130, P079 Rally Drift ₹150, P080 ₹90, P100 Rainbow ₹80).
 1. **WhatsApp number for orders** (until WATI): put it in `ORDER_WHATSAPP` in `index.html`.
 2. **IMS clean-up (MIS):** "Closing Stock" column is out of line from row "Can (Vedashri)" down; many best-sellers show

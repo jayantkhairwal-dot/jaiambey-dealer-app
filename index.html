@@ -667,6 +667,9 @@ a{color:inherit;text-decoration:none}
   // Jai Ambey's order WhatsApp number: country code + number, digits only (e.g. "919876543210").
   // Left blank, WhatsApp opens and the dealer picks the contact to send to.
   const ORDER_WHATSAPP = "";
+  // Live stock: web app URL of apps-script/live-stock.gs (see apps-script/SETUP-live-stock.md).
+  // It answers only "sold out / available" per product, never quantities. Blank = use data/sold-out.json only.
+  const STOCK_URL = "";
   // Phone number to call, shown on the About page. Leave blank to hide the Call button.
   const CALL_NUMBER = "";
   // Best-sellers by number of dealers ordering (Jul–Nov 2026), most first. Update by hand.
@@ -1242,6 +1245,24 @@ a{color:inherit;text-decoration:none}
   // ---------- start ----------
   updateCartUI(false);
   route();
+  // Live stock from the IMS (after the catalog is on screen, so a slow answer never delays the app).
+  // For products the IMS knows, its answer replaces data/sold-out.json; everything else keeps the file's status.
+  function liveStock(){
+    if (!STOCK_URL) return;
+    const ctl = new AbortController(); setTimeout(() => ctl.abort(), 8000);
+    fetch(STOCK_URL, {signal: ctl.signal}).then(r => r.ok ? r.json() : null).then(r => {
+      if (!r || !Array.isArray(r.known) || !Array.isArray(r.out)) return;
+      const out = new Set(r.out); let changed = 0;
+      r.known.forEach(id => { const p = byId[id]; if (p && p.out !== out.has(id)){ p.out = out.has(id); changed++; } });
+      if (!changed) return;
+      const gone = Object.keys(cart).filter(blocked);
+      if (gone.length){ gone.forEach(id => delete cart[id]); S.set("cart", cart);
+        toast(`${gone.length} item${gone.length>1?"s":""} in your cart ${gone.length>1?"are":"is"} now sold out`); }
+      // Re-draw the screen (not the cart: the dealer may be typing shop details there)
+      if (current === "cart"){ updateCartUI(false); return; }
+      const y = window.scrollY; current = null; route(); window.scrollTo(0, y);
+    }).catch(() => {});
+  }
   const getList = f => fetch(f, {cache:"no-cache"}).then(r => r.ok ? r.json() : []).catch(() => []);
   const soldOut = Promise.all([getList("data/sold-out.json"), getList("data/on-request.json")]);
   fetch("data/products.json", {cache:"no-cache"})
@@ -1261,6 +1282,7 @@ a{color:inherit;text-decoration:none}
         setTimeout(() => toast(`${gone.length} item${gone.length>1?"s":""} in your cart ${gone.length>1?"are":"is"} no longer available`), 400); }
       FAVOURITES.forEach((id, i) => favRank[id] = i);
       current = null; route();
+      liveStock();
     })
     .catch(() => {
       const msg = `<div class="empty-box" style="grid-column:1/-1"><h3>Could not load products</h3><p>Check your internet and try again.</p>
