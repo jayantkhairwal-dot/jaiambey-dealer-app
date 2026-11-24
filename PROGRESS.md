@@ -145,6 +145,11 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   (same result as the manual list) and in the browser with a mock answer.
   When adding products: add their IMS name to MAP and redeploy (new version).
 
+- 24 Nov: **automatic stock update without any setup** (Jayant: "do it on my behalf"): tools/update_stock.py reads an Excel copy
+  of the IMS (same MAP + rule as live-stock.gs) and rewrites data/sold-out.json. A scheduled task (Claude, fresh session) runs it
+  4 times a day (10:47, 13:47, 16:47, 18:47 IST): downloads the IMS read-only via the Drive connector, runs the script, deletes the copy,
+  commits + pushes only if something changed. The Apps Script live version stays ready if Jayant ever wants real-time.
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
