@@ -126,6 +126,11 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
 
 - 21 Nov 6:20 pm check: new tabs Sirens (Duratone VIP ₹400, Iota Electronic ₹875, Duratone Dual ₹850: need photos) and Dash Cams (515 ₹1,500, 513 = 2-Way 512-13 ₹2,100, 3-Way ₹2,700: already match).
 
+- 24 Nov: **Sold out refreshed from the IMS (22 Nov column)**. Rule (Jayant): stock 0 = Sold out; minus stock = available
+  (incoming stock not entered; team confirms on WhatsApp). 20 sold out now (was 46). Newly sold out: Bluzon 6.5" 2-way component
+  speaker, Bluzon RCA cable 5 m. Back: Godrej Aer Hanging, Involve Spray, Eagle 244W H1, Tri-Colour 240W H7, MP3 player + 26 minus-stock items.
+  Snowy Oudh Hanging and Crystal Dashboard not found in IMS: left sold out. 42 minus-stock + 16 not-in-IMS sent to MIS (IMS-minus-stock-for-MIS.xlsx).
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
