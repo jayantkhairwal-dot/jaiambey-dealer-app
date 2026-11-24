@@ -135,6 +135,9 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   3 Lens LED ₹500, 4 Lens LED ₹600, Hindcart 8G amp kit ₹550, Duratone VIP siren ₹400, Iota siren ₹875, Duratone dual siren ₹850);
   sheet photos for Bluzon DVR 515, 513 (renamed "DVR 513 Full Touch Dash Cam (Dual Camera)") and 3-way 517. 269 cards / 320 items.
 
+- 24 Nov (team via Jayant): Formula 1 Headlight Restorer ₹450, Bluzon 155W H1 and 9012 ₹1,400, Bluzon 2" Grill Projector Tri ₹3,800.
+  Team also said "90" (Mint Air?) - asked Jayant to confirm.
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
@@ -147,7 +150,6 @@ DVR 517 3-way vs 4G, MP3 player model). Nothing added to the app yet: waiting fo
 Prices Jayant gives in chat beat the Product Catalogue sheet when they differ.
 
 ## Waiting on Jayant (start here next session)
-00. Formula 1 Headlight Restorer price (blank in the sheet too).
 0. **Later task (Jayant):** new prices for the 4 Mint Air dashboards (P078 ₹130, P079 Rally Drift ₹150, P080 ₹90, P100 Rainbow ₹80).
 1. **WhatsApp number for orders** (until WATI): put it in `ORDER_WHATSAPP` in `index.html`.
 2. **IMS clean-up (MIS):** "Closing Stock" column is out of line from row "Can (Vedashri)" down; many best-sellers show
