@@ -56,6 +56,13 @@ def main(path):
         known.add(pid)
         if s == 0:
             out.add(pid)
+    # Safety stop: if the IMS looks rebuilt or half-filled, change nothing and say why.
+    found_share = len(known) / max(1, len(m))
+    flips = len({e["id"] for e in current if e["id"] in known} ^ out)
+    if found_share < 0.9 or flips > 15:
+        print(f"STOPPED, nothing changed: IMS day {day} | only {len(known)} of {len(m)} products found, "
+              f"{flips} would flip. The IMS looks rebuilt or half-filled; check it with the MIS team first.")
+        sys.exit(2)
     keep = [e for e in current if e["id"] not in known and e["id"] in products]  # unknown: keep as is
     new = keep + [{"id": i, "name": products[i]["name"]} for i in sorted(out)]
     before, after = {e["id"] for e in current}, {e["id"] for e in new}

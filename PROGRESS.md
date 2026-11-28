@@ -150,6 +150,11 @@ Preview link (not for dealers yet): https://jayantkhairwal-dot.github.io/jaiambe
   once a day at 8:51 am IST (Jayant: daily 9 am): downloads the IMS read-only via the Drive connector, runs the script, deletes the copy,
   commits + pushes only if something changed. The Apps Script live version stays ready if Jayant ever wants real-time.
 
+- 28 Nov: daily stock update STOPPED (nothing changed): the IMS was restructured (565 items, was 617; 80 app products no longer
+  found, e.g. all Bluzon chargers/cameras/155W; Involve Spray, Lure Spray, Godrej Spray, BO-10 now 0 on every day 1–27 Nov).
+  Added a safety stop to tools/update_stock.py (stops if under 90% of products found or more than 15 would flip).
+  Asked Jayant to check with MIS; MAP needs updating to the new IMS names once settled.
+
 ## REMIND JAYANT (parked 14 Nov, car accessories from Drive "MDO Image")
 1. #20 IPH Polar moment lens: added at ₹3,300 (WhatsApp); sheet said ₹3,500. Confirm.
 2. ATM lamps: added "ATM lamp" ₹160 (#12 photo) + "with App" ₹225 (#11 photo). Confirm.
